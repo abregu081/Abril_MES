@@ -2,7 +2,7 @@ import Conexiones_MES as MES
 import Controller_Error
 import Setting as ST
 
-class Escaner:
+class Consultas_SIM:
     def __init__(self, lectura):
         parametros = ST.Setting.obtener_parametros_MES()
         self.ip = parametros['ip']
@@ -18,8 +18,8 @@ class Escaner:
         mensaje = f"BREQ|process={self.proceso}|station={self.estacion}|id={sn}|msgT={self.mensajeKey}" 
         return mensaje
 
-    def _formato_bcmp(self, sn):     
-        mensaje = f"BCMP|process={self.proceso}|station={self.estacion}|id={sn}|status=PASS|msgT={self.mensajeKey}"
+    def _formato_bcmp(self, sn, estado):     
+        mensaje = f"BCMP|process={self.proceso}|station={self.estacion}|id={sn}|status={estado}|msgT={self.mensajeKey}"
         return mensaje
 
     #Con esto le envio el breq a SIM
@@ -57,7 +57,14 @@ class Escaner:
         sn = self.sn.strip()
         if len(sn) != 25:
             return self._breq_sn(sn)
-         
+
+
+    #Ejecuto directamento el  bcmp
+    def _check_bcmp(self, sn ,estado):
+        sn = self.sn.strip()
+        if len(sn) != 25:
+            return self._bcmp_sn(sn, estado)
+        
 
     # ─────────────────────  VALIDADORES SIM  ─────────────────────────
     @staticmethod
@@ -67,4 +74,5 @@ class Escaner:
     @staticmethod
     def _back_ok(resp):   # BACK PASS
         return resp.startswith("BACK") and "status=PASS" in resp.split('|')[2]
-        
+    
+    

@@ -4,7 +4,6 @@ import Controller_Error
 
 class Setting:
     def __init__(self):
-        self.FPORT = None
         self.VPORTIN = None
         self.VPORTOUT = None
         self.BAUDRATE = None  
