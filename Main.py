@@ -76,6 +76,11 @@ def plc_a_pc(PLC_salida,Ventrada, term = b'\r'):
         except Exception as e:
                 Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "_loop_plc2pc", str(e))
 
+def _append_log(sn: str, msg: str):
+    # Formato: SN<TAB>mensaje
+    lineas_log.append(f"{sn}\t{msg}")
+
+
 
 os.makedirs(directorio_salida,exist_ok=True)
 logger = LG.LogManager(directorio_salida)
@@ -133,14 +138,21 @@ else:
     threading.Thread(target=pedir_sn_async, daemon=True).start()
 
     def procesar_sn(sn_texto: str):
-        global permitir_paso_mensajes, sn_actual
+        global permitir_paso_mensajes, sn_actual, lineas_log
         sn_actual = sn_texto
+        lineas_log = []  # iniciar log para este SN
+
         try:
-            breq = CS.Consultas_SIM._check_sn(sn_actual)
+            ok_breq, breq_msg, breq_resp = CS.Consultas_SIM._check_sn(sn_actual)
         except Exception as e:
             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_sn", str(e))
-            breq = False
-        permitir_paso_mensajes = bool(breq)
+            ok_breq, breq_msg, breq_resp = False, f"BREQ(ERROR_BUILD)|id={sn_actual}", f"ERROR:{e}"
+
+        # Grabar en memoria (luego se guarda a disco al cerrar ciclo con BCMP)
+        _append_log(sn_actual, breq_msg)
+        _append_log(sn_actual, breq_resp)
+
+        permitir_paso_mensajes = bool(ok_breq)
         if permitir_paso_mensajes:
             while not cola_pendientes.empty():
                 frame_p = cola_pendientes.get_nowait()
@@ -152,7 +164,7 @@ else:
                     Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.cola", str(e))
     
     def reiniciar_ciclo():
-        global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, buf
+        global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, buf, lineas_log
         iniciar_secuencia = False
         resultado_secuencia = None
         permitir_paso_mensajes = False
@@ -227,19 +239,30 @@ else:
                 elif texto == "12oe.":  
                     resultado_secuencia = "PASS"
                     escribir_en_consola("APP", "Resultado secuencia = PASS (12oe.)")
-                if resultado_secuencia in ("PASS", "FAIL") and sn_actual: #consulta BCMP y enviar rs.
+                if resultado_secuencia in ("PASS", "FAIL") and sn_actual:
                     try:
-                        bcmp = CS.Consultas_SIM._check_bcmp(sn_actual, resultado_secuencia)
+                        ok_bcmp, bcmp_msg, bcmp_resp = CS.Consultas_SIM._check_bcmp(sn_actual, resultado_secuencia)
                     except Exception as e:
                         Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_bcmp", str(e))
-                        bcmp = False
-                    if bcmp:
+                        ok_bcmp, bcmp_msg, bcmp_resp = False, f"BCMP(ERROR_BUILD)|id={sn_actual}|status={resultado_secuencia}", f"ERROR:{e}"
+
+                    # Agregar líneas al buffer
+                    _append_log(sn_actual, bcmp_msg)
+                    _append_log(sn_actual, bcmp_resp)
+
+                    # Guardar archivo según resultado (PASS/FAIL del proceso) – puedes ajustar esta lógica si querés usar ok_bcmp también
+                    try:
+                        ruta = logger.save(sn_actual, lineas_log, is_pass=(resultado_secuencia == "PASS" and ok_bcmp))
+                        escribir_en_consola("LOG", f"Guardado: {ruta}")
+                    except Exception as e:
+                        Controller_Error.Logs_Error.CapturarEvento("main.log", "save", str(e))
+
+                    if ok_bcmp:
                         try:
                             PLC_salida.write(b'rs.' + TERM_PC)
                             escribir_en_consola("[ABRIL-SIM->PLC]", "rs. (BCMP OK)")
                         except Exception as e:
                             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.rs", str(e))
-                        # nuevo SN
                         reiniciar_ciclo()
                         escribir_en_consola("APP", "Ciclo reiniciado. Ingresá el próximo SN cuando quieras.")
                     else:

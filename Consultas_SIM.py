@@ -27,33 +27,32 @@ class Consultas_SIM:
     def _breq_sn(self, sn):
         breq = self._formato_breq(sn)
         try:
-            Mensaje_y_Respuesta_SIM = MES.MES_Socket.enviar_mensaje(self.ip, self.port,self.timeout, breq)
+            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port, self.timeout, breq)
         except TimeoutError as e:
             print("TimeoutError: No se pudo conectar con SIM")
             Controller_Error.Logs_Error.CapturarEvento("Escaner", "breq_sn", str(e))
-            return False
-        if not self._breq_ok(Mensaje_y_Respuesta_SIM):
-            print("\n[SIM] : BREQ status=FAIL")
-            return False
-        else:
-            print("\n[SIM] : BREQ status=PASS") # Despues tengo que agregar la parte del procesamiento
-            return True
-    #envio el bcmp a SIM
+            # DEVUELVE tupla para log
+            return False, breq, f"ERROR:{e}"
 
-    def _bcmp_sn(self, sn):
-        bcmp = self._formato_bcmp(sn)
+        ok = self._breq_ok(resp)
+        print("\n[SIM] : BREQ status=" + ("PASS" if ok else "FAIL"))
+        # DEVUELVE tupla para log
+        return ok, breq, resp
+
+    def _bcmp_sn(self, sn, estado):
+        bcmp = self._formato_bcmp(sn, estado)
         try:
-            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port,self.timeout, bcmp)
+            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port, self.timeout, bcmp)
         except TimeoutError as e:
             print("TimeoutError: No se pudo conectar con SIM")
             Controller_Error.Logs_Error.CapturarEvento("Escaner", "bcmp_sn", str(e))
+            # DEVUELVE tupla para log
+            return False, bcmp, f"ERROR:{e}"
 
-        if self._back_ok(resp):
-            print("\n[SIM] : BCMP status=PASS")
-            return True
-        else:
-            print("\n[SIM] : BCMP status=FAIL")
-            return False
+        ok = self._back_ok(resp)
+        print("\n[SIM] : BCMP status=" + ("PASS" if ok else "FAIL"))
+        # DEVUELVE tupla para log
+        return ok, bcmp, resp
 
     
     # ─────────────────────  Se ejecuta directamente Breq y el Bcmp  ─────────────────────────
