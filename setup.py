@@ -6,7 +6,7 @@ from cx_Freeze import setup, Executable
 includes = []
 includefiles = []
 excludes = ['Tkinter']
-packages = ['SerialCOM',"Setting","Scanner","threading","serial","queue",'Controller_Error', 'Conexiones_MES', 'datetime',"socket","os","sys"]
+packages = ['SerialCOM',"Setting","Consultas_SIM","threading","serial","queue",'Controller_Error', 'Conexiones_MES', 'datetime',"socket","os","sys","time"]
 
 setup(
  name="TestSnifferMirgor",

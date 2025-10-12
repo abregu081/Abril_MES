@@ -2,6 +2,7 @@ import Conexiones_MES as MES
 import Controller_Error
 import Setting as ST
 
+
 class Consultas_SIM:
     def __init__(self, lectura):
         parametros = ST.Setting.obtener_parametros_MES()
@@ -36,9 +37,9 @@ class Consultas_SIM:
             return False
         else:
             print("\n[SIM] : BREQ status=PASS") # Despues tengo que agregar la parte del procesamiento
-           # Antes de esa parte tiene que ir el objeto para procesar la info del sniffer
             return True
     #envio el bcmp a SIM
+
     def _bcmp_sn(self, sn):
         bcmp = self._formato_bcmp(sn)
         try:
@@ -49,17 +50,20 @@ class Consultas_SIM:
 
         if self._back_ok(resp):
             print("\n[SIM] : BCMP status=PASS")
+            return True
         else:
             print("\n[SIM] : BCMP status=FAIL")
+            return False
 
-    #Con esto el escaner verifica agrupando 
+    
+    # ─────────────────────  Se ejecuta directamente Breq y el Bcmp  ─────────────────────────
+
     def _check_sn(self, sn):
         sn = self.sn.strip()
         if len(sn) != 25:
             return self._breq_sn(sn)
 
 
-    #Ejecuto directamento el  bcmp
     def _check_bcmp(self, sn ,estado):
         sn = self.sn.strip()
         if len(sn) != 25:
