@@ -12,7 +12,7 @@ import LogCreator as LG
 
 configuracion, modo_desarrollador = ST.Setting.obtener_puertos_comunicaciones()
 configuracion_MES = ST.Setting.obtener_parametros_MES()
-valores_definidos_taxis = ["16in", "ec", "0in"]
+valores_definidos_taxis = ST.Setting.obtener_Comandos_PLC()
 Activador_MES = configuracion_MES["habilitar_mes"]
 directorio_salida = configuracion_MES["directorio_logs"]
 if Activador_MES == "ON":

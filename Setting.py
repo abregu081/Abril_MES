@@ -63,16 +63,19 @@ class Setting:
     
     @staticmethod
     def obtener_Comandos_PLC():
-        setting = {}
-        file = Setting.Capturar_datos_setting_MES("Comandos_PLC.ini")
+        comandos = []
+        file = Setting.Capturar_datos_setting_MES("comandos.ini")
         with open(file, 'r') as f:
             for line in f:
-                if(not line or '=' not in line): continue
-                if(line[0]=="#"): continue
+                if not line or '=' not in line:
+                    continue
+                if line[0] == "#":
+                    continue
                 key, value = line.split('=', 1)
                 if key and value:
-                    setting[key.strip()] = value.strip()
-        return setting
+                    import re
+                    comandos = re.findall(r'"([^"]+)"', value)
+        return comandos
     
     @staticmethod
     def obtener_puertos_comunicaciones():
