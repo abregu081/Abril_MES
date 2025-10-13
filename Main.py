@@ -235,7 +235,7 @@ else:
                         bcmp = False
                     if bcmp:
                         try:
-                            PLC_salida.write(b'rs.' + TERM_PC)
+                            PLC_salida.write(b'rs' + TERM_PC)
                             escribir_en_consola("[ABRIL-SIM->PLC]", "rs. (BCMP OK)")
                         except Exception as e:
                             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.rs", str(e))
