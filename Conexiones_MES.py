@@ -25,7 +25,7 @@ class MES_Socket:
         client_socket.sendall((msg + "\n").encode('utf-8'))
         respuesta = client_socket.recv(1024).decode('utf-8').replace("\n", "")
         client_socket.close()
-        print(f"\nRespuesta de SIM: {respuesta}")
+        print(f"\n[SIM]: {respuesta}")
         return respuesta
 
 

@@ -27,17 +27,15 @@ class Consultas_SIM:
     def _breq_sn(self, sn):
         breq = self._formato_breq(sn)
         try:
-            Mensaje_y_Respuesta_SIM = MES.MES_Socket.enviar_mensaje(self.ip, self.port,self.timeout, breq)
+            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port,self.timeout, breq)
         except TimeoutError as e:
             print("TimeoutError: No se pudo conectar con SIM")
-            Controller_Error.Logs_Error.CapturarEvento("Escaner", "breq_sn", str(e))
+            Controller_Error.Logs_Error.CapturarEvento("ConsultaSIM", "breq_sn", str(e))
             return False
-        if not self._breq_ok(Mensaje_y_Respuesta_SIM):
-            print("\n[SIM] : BREQ status=FAIL")
-            return False
-        else:
-            print("\n[SIM] : BREQ status=PASS") # Despues tengo que agregar la parte del procesamiento
-            return True
+        ok = self._breq_ok(resp)
+        print("\n[SIM] : BREQ status=" + ("PASS" if ok else "FAIL"))
+        # DEVUELVE tupla para log
+        return ok, breq, resp
     #envio el bcmp a SIM
 
     def _bcmp_sn(self, sn):
@@ -48,23 +46,21 @@ class Consultas_SIM:
             print("TimeoutError: No se pudo conectar con SIM")
             Controller_Error.Logs_Error.CapturarEvento("Escaner", "bcmp_sn", str(e))
 
-        if self._back_ok(resp):
-            print("\n[SIM] : BCMP status=PASS")
-            return True
-        else:
-            print("\n[SIM] : BCMP status=FAIL")
-            return False
+        ok = self._back_ok(resp)
+        print("\n[SIM] : BCMP status=" + ("PASS" if ok else "FAIL"))
+        # DEVUELVE tupla para log
+        return ok, bcmp, resp
 
     
     # ─────────────────────  Se ejecuta directamente Breq y el Bcmp  ─────────────────────────
 
-    def _check_sn(self, sn):
+    def _check_sn(self):
         sn = self.sn.strip()
         if len(sn) != 25:
             return self._breq_sn(sn)
 
 
-    def _check_bcmp(self, sn ,estado):
+    def _check_bcmp(self,estado):
         sn = self.sn.strip()
         if len(sn) != 25:
             return self._bcmp_sn(sn, estado)

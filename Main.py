@@ -9,12 +9,16 @@ import queue
 import Consultas_SIM as CS
 import os
 import LogCreator as LG
+import sys
+import Alertas
 
 configuracion, modo_desarrollador = ST.Setting.obtener_puertos_comunicaciones()
 configuracion_MES = ST.Setting.obtener_parametros_MES()
 valores_definidos_taxis = ST.Setting.obtener_Comandos_PLC()
 Activador_MES = configuracion_MES["habilitar_mes"]
 directorio_salida = configuracion_MES["directorio_logs"]
+popups = Alertas.Popup("ABRIL-SIM")
+
 if Activador_MES == "ON":
     Activador_MES = True
 
@@ -44,12 +48,12 @@ def obtener_parametros_puertos(lista_configuraciones): #Funcion para el modo con
             Controller_Error.Logs_Error.CapturarEvento("Obtener_parametros_main", f"Configuracion_{idx+1}", str(e))
 
 def escribir_en_consola(tag, msg):
-        if modo_desarrollador == "ON":
-            print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] [{tag}] {msg}")
+    if modo_desarrollador == "ON":
+        print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] [{tag}] {msg}", flush=True)
 
 def escribir_en_consola_USER(tag, msg):
-        if modo_desarrollador == "OFF":
-            print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] [{tag}] {msg}")
+    if modo_desarrollador == "OFF":
+        print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] [{tag}] {msg}", flush=True)
 
 def plc_a_pc(PLC_salida,Ventrada, term = b'\r'):
     global activador
@@ -74,7 +78,11 @@ def plc_a_pc(PLC_salida,Ventrada, term = b'\r'):
                     except Exception as e:
                             Controller_Error.Logs_Error.CapturarEvento("", "plc2pc.write", str(e))
         except Exception as e:
-                Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "_loop_plc2pc", str(e))
+                print(e)
+
+def _append_log(sn: str, msg: str):
+    # Formato: SN<TAB>mensaje
+    lineas_log.append(f"{sn}\t{msg}")
 
 
 os.makedirs(directorio_salida,exist_ok=True)
@@ -116,6 +124,7 @@ else:
         hilo_plc_a_pc.start()
     except Exception as e:
         Controller_Error.Logs_Error.CapturarEvento("Crear Puertos", "Puerto",str(e))
+        popups.error(str(e),"Crear Puerto")
 
     TERM_PC = b'\r'
     buf = bytearray()
@@ -125,22 +134,40 @@ else:
     def pedir_sn_async():
         while True:
             try:
+                sys.stdout.flush()
                 sn_in = input("Pickeo de SN : ").strip()
-                sn_queue.put(sn_in)
+                if sn_in:  # Encolar sólo si no está vacío
+                    sn_queue.put(sn_in)
             except (EOFError, KeyboardInterrupt):
                 break
-
     threading.Thread(target=pedir_sn_async, daemon=True).start()
 
     def procesar_sn(sn_texto: str):
-        global permitir_paso_mensajes, sn_actual
+        global permitir_paso_mensajes, sn_actual, lineas_log
+        #  hay un SN válido en proceso, ignorar el nuevo
+        if sn_actual is not None and permitir_paso_mensajes:
+            escribir_en_consola_USER("[Abril_SIM]", f"SN {sn_actual} en proceso. Esperá a reiniciar el ciclo.")
+            return
+
         sn_actual = sn_texto
+        lineas_log = []
+        
         try:
-            breq = CS.Consultas_SIM._check_sn(sn_actual)
+            consultas_sim = CS.Consultas_SIM(sn_actual)
+            ok_breq, breq_msg, breq_resp = consultas_sim._check_sn()
         except Exception as e:
+            popups.error(e,"SIM")
             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_sn", str(e))
-            breq = False
-        permitir_paso_mensajes = bool(breq)
+            ok_breq = False
+            breq_msg = "ERROR"
+            breq_resp = str(e)
+            
+
+
+        _append_log(sn_actual, breq_msg)
+        _append_log(sn_actual, breq_resp)
+
+        permitir_paso_mensajes = bool(ok_breq)
         if permitir_paso_mensajes:
             while not cola_pendientes.empty():
                 frame_p = cola_pendientes.get_nowait()
@@ -149,10 +176,11 @@ else:
                     tpend = frame_p.decode('utf-8', errors='ignore').strip()
                     escribir_en_consola("[Abril_SIM]---->PLC", f"{tpend!r}")
                 except Exception as e:
-                    Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.cola", str(e))
+                    print(e)
+                    #Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.cola", str(e))
     
     def reiniciar_ciclo():
-        global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, buf
+        global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, buf,lineas_log
         iniciar_secuencia = False
         resultado_secuencia = None
         permitir_paso_mensajes = False
@@ -201,11 +229,7 @@ else:
                 texto = frame.decode('utf-8', errors='ignore').strip()
                 #escribir_en_consola("[PC->ABRIL-SIM]", f"{texto!r}")
                 if texto in dejarPasar:# pasa siempre
-                    try:
                         PLC_salida.write(frame)
-                        #escribir_en_consola("[ABRIL-SIM]-->PLC", f"{texto!r} (whitelist)")
-                    except Exception as e:
-                        Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.whitelist", str(e))
                 else:
                     # fuera depende del SN (semaforo)
                     if permitir_paso_mensajes:
@@ -228,12 +252,14 @@ else:
                     resultado_secuencia = "PASS"
                     escribir_en_consola("APP", "Resultado secuencia = PASS (12oe.)")
                 if resultado_secuencia in ("PASS", "FAIL") and sn_actual: #consulta BCMP y enviar rs.
+                    ok_bcmp = None
                     try:
-                        bcmp = CS.Consultas_SIM._check_bcmp(sn_actual, resultado_secuencia)
+                        ok_bcmp, bcmp_msg, bcmp_resp = CS.Consultas_SIM._check_bcmp(resultado_secuencia)
                     except Exception as e:
                         Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_bcmp", str(e))
-                        bcmp = False
-                    if bcmp:
+                        ok_bcmp = False
+                    respuesta_bcmp = bool(ok_bcmp)
+                    if respuesta_bcmp:
                         try:
                             PLC_salida.write(b'rs' + TERM_PC)
                             escribir_en_consola("[ABRIL-SIM->PLC]", "rs. (BCMP OK)")
@@ -248,29 +274,3 @@ else:
         except Exception as e:
             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "loop.error", str(e))
             time.sleep(0.02)
-             
-        
-    
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

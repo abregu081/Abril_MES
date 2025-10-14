@@ -61,7 +61,8 @@ class MonitorSerial:
                         self.PLC_salida.write(frame)
                         #self._log("APP>PLC", f"TX {texto!r}") para ver que le esta enviando la app a mi programa
             except Exception as e:
-                Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "_loop_pc2plc", str(e))
+                print(e)
+                #Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "_loop_pc2plc", str(e))
     
 
     # PLC → COM40 → APP → COM32 → TEXAS
@@ -87,9 +88,11 @@ class MonitorSerial:
                             self.Ventrada.write(frame)
                             #self._log("APP>TEXAS", f"TX {texto!r}") #Camino inverso del plc a texis
                         except Exception as e:
-                            Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "plc2pc.write", str(e))
+                            print(e)
+                            #Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "plc2pc.write", str(e))
             except Exception as e:
-                Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "_loop_plc2pc", str(e))
+                print(e)
+                #Controller_Error.Logs_Error.CapturarEvento("MonitorSerial", "_loop_plc2pc", str(e))
 
 
 
