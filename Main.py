@@ -156,7 +156,7 @@ else:
             consultas_sim = CS.Consultas_SIM(sn_actual)
             ok_breq, breq_msg, breq_resp = consultas_sim._check_sn()
         except Exception as e:
-            popups.error(e,"SIM")
+            popups.error(breq_msg,"SIM")
             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_sn", str(e))
             ok_breq = False
             breq_msg = "ERROR"
