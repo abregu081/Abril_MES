@@ -1,2 +1,3 @@
 "# Abril_MES" 
-Si estas en el main en CUANDO HAGAS EL RS BORRA SI TIENE UN PUNTO PORQUE CAPAZ NO EJECUTAR EL COMANDO
+
+Cualquier cambio debe realizarce sobre la funcion de procesar SN "procesar_sn(sn_texto: str):"
