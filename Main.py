@@ -21,6 +21,8 @@ popups = Alertas.Popup("ABRIL-SIM")
 
 if Activador_MES == "ON":
     Activador_MES = True
+else:
+    Activador_MES = False
 
 def crear_monitores(lista_configuraciones): #Para Funcion sin mes
     monitores = []
@@ -72,7 +74,6 @@ def plc_a_pc(PLC_salida,Ventrada, term = b'\r'):
                     del buf[:pos+len(term)]
                     texto = frame.decode('utf-8', errors="ignore").strip()
                     mensajes_recibidos.append(texto)
-                    escribir_en_consola("PLC--->Abril_SIM", f"{texto!r}")
                     try:
                         Ventrada.write(frame)
                     except Exception as e:
@@ -161,8 +162,6 @@ else:
             ok_breq = False
             breq_msg = "ERROR"
             breq_resp = str(e)
-            
-
 
         _append_log(sn_actual, breq_msg)
         _append_log(sn_actual, breq_resp)
@@ -174,10 +173,8 @@ else:
                 try:
                     PLC_salida.write(frame_p)
                     tpend = frame_p.decode('utf-8', errors='ignore').strip()
-                    escribir_en_consola("[Abril_SIM]---->PLC", f"{tpend!r}")
                 except Exception as e:
                     print(e)
-                    #Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.cola", str(e))
     
     def reiniciar_ciclo():
         global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, buf,lineas_log
@@ -196,8 +193,9 @@ else:
         sn_boot = sn_queue.get_nowait()
         procesar_sn(sn_boot)
     except queue.Empty:
-        escribir_en_consola("[Abril_SIM]", "Esperando SN...")
-        escribir_en_consola_USER("[Abril_SIM]", "Esperando SN...")
+        pass
+        #escribir_en_consola("[Abril_SIM]", "Esperando SN...")
+        #escribir_en_consola_USER("[Abril_SIM]", "Esperando SN...")
 
     #principal
     while activador:
@@ -227,7 +225,6 @@ else:
                 frame = bytes(buf[:pos + len(TERM_PC)])
                 del buf[:pos + len(TERM_PC)]
                 texto = frame.decode('utf-8', errors='ignore').strip()
-                #escribir_en_consola("[PC->ABRIL-SIM]", f"{texto!r}")
                 if texto in dejarPasar:# pasa siempre
                         PLC_salida.write(frame)
                 else:
@@ -235,42 +232,52 @@ else:
                     if permitir_paso_mensajes:
                         try:
                             PLC_salida.write(frame)
-                            escribir_en_consola("[ABRIL-SIM->PLC]", f"{texto!r} (green)")
                         except Exception as e:
                             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.green", str(e))
                     else:
                         cola_pendientes.put(frame)
-                        escribir_en_consola("[ABRIL-SIM]", f"HOLD {texto!r} (SN inválido; en cola)")
-                # eventos 
-                if texto == "3oe.":
-                    iniciar_secuencia = True
-                    escribir_en_consola("APP", "Secuencia iniciada (3oe.)")
-                elif texto == "10oe.":  
-                    resultado_secuencia = "FAIL"
-                    escribir_en_consola("APP", "Resultado secuencia = FAIL (10oe.)")
-                elif texto == "12oe.":  
-                    resultado_secuencia = "PASS"
-                    escribir_en_consola("APP", "Resultado secuencia = PASS (12oe.)")
-                if resultado_secuencia in ("PASS", "FAIL") and sn_actual: #consulta BCMP y enviar rs.
-                    ok_bcmp = None
-                    try:
-                        ok_bcmp, bcmp_msg, bcmp_resp = CS.Consultas_SIM._check_bcmp(resultado_secuencia)
-                    except Exception as e:
-                        Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_bcmp", str(e))
-                        ok_bcmp = False
-                    respuesta_bcmp = bool(ok_bcmp)
-                    if respuesta_bcmp:
+        
+                # eventos
+                if not sn_actual or not permitir_paso_mensajes:
+                    #escribir_en_consola("APP", f"Evento {texto!r} ignorado: SN no validado.")
+                    continue
+                else: 
+                    if texto == "3oe":
+                        iniciar_secuencia = True
+                        escribir_en_consola("APP", "Secuencia iniciada (3oe)")
+                    elif texto == "3od":
+                        iniciar_secuencia = False
+                        escribir_en_consola("APP", "Secuencia Finalizada (3oe)")
+                    elif texto == "10oe":
+                        resultado_secuencia = "FAIL"
+                        escribir_en_consola("APP", "Resultado secuencia = FAIL (10oe)")
+                    elif texto == "12oe":  
+                        resultado_secuencia = "PASS"
+                        escribir_en_consola("APP", "Resultado secuencia = PASS (12oe)")
+                    if resultado_secuencia in ("PASS", "FAIL") and sn_actual: #consulta BCMP y enviar rs.
+                        ok_bcmp = None
                         try:
-                            PLC_salida.write(b'rs' + TERM_PC)
-                            escribir_en_consola("[ABRIL-SIM->PLC]", "rs. (BCMP OK)")
+                            consultas = CS.Consultas_SIM(sn_actual) 
+                            ok_bcmp, bcmp_msg, bcmp_resp = consultas._check_bcmp(resultado_secuencia)
                         except Exception as e:
-                            Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.rs", str(e))
-                        # nuevo SN
+                            Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "check_bcmp", str(e))
+                            ok_bcmp = False
+                        respuesta_bcmp = bool(ok_bcmp)
+                        if respuesta_bcmp:
+                            try:
+                                print("Seccion respuesta")
+                                #PLC_salida.write(b'rs' + TERM_PC)
+                                #escribir_en_consola("[ABRIL-SIM->PLC]", "rs. (BCMP OK)")
+                            except Exception as e:
+                                Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "write.rs", str(e))
+                            # nuevo SN
+                            reiniciar_ciclo()
+                            escribir_en_consola("APP", "Ciclo reiniciado. Ingresá el próximo SN cuando quieras.")
+                        else:
+                            escribir_en_consola("APP", f"BCMP rechazado para SN [{sn_actual}] con {resultado_secuencia}.")
+                        
                         reiniciar_ciclo()
-                        escribir_en_consola("APP", "Ciclo reiniciado. Ingresá el próximo SN cuando quieras.")
-                    else:
-                        escribir_en_consola("APP", f"BCMP rechazado para SN [{sn_actual}] con {resultado_secuencia}.")
-                        reiniciar_ciclo()
+                        escribir_en_consola("Abril-SIM", "Ciclo reinciado")
         except Exception as e:
             Controller_Error.Logs_Error.CapturarEvento("main.pc2plc", "loop.error", str(e))
             time.sleep(0.02)
