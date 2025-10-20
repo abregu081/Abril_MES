@@ -7,7 +7,7 @@ import queue
 import Consultas_SIM as SIM
 
 class MonitorSerial:
-    def __init__(self, VPORTIN, VPORTOUT, baudrate, timeout=1):
+    def __init__(self, VPORTIN, VPORTOUT, baudrate, timeout=None):
         # COM32: Entrada desde TEXAS (virtual)
         self.Ventrada = serial.Serial(VPORTIN, baudrate, timeout=timeout)
         # COM40: Salida hacia PLC físico

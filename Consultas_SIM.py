@@ -2,7 +2,6 @@ import Conexiones_MES as MES
 import Controller_Error
 import Setting as ST
 
-
 class Consultas_SIM:
     def __init__(self, lectura):
         parametros = ST.Setting.obtener_parametros_MES()
@@ -33,7 +32,6 @@ class Consultas_SIM:
             Controller_Error.Logs_Error.CapturarEvento("ConsultaSIM", "breq_sn", str(e))
             return False
         ok = self._breq_ok(resp)
-        print("\n[SIM] : BREQ status=" + ("PASS" if ok else "FAIL"))
         # DEVUELVE tupla para log
         return ok, breq, resp
     #envio el bcmp a SIM
@@ -47,7 +45,6 @@ class Consultas_SIM:
             Controller_Error.Logs_Error.CapturarEvento("Escaner", "bcmp_sn", str(e))
 
         ok = self._back_ok(resp)
-        print("\n[SIM] : BCMP status=" + ("PASS" if ok else "FAIL"))
         # DEVUELVE tupla para log
         return ok, bcmp, resp
 
