@@ -18,6 +18,36 @@ from typing import Optional, Callable
 root = tk.Tk()
 root.withdraw()
 avisos = AT.PopUpAvisos(titulo_app="Abril SIM")
+
+# Cola thread-safe para mostrar pop-ups desde el hilo principal
+popup_queue = queue.Queue()
+
+def procesar_popups():
+    """Procesa pop-ups pendientes en la cola desde el hilo principal"""
+    try:
+        while not popup_queue.empty():
+            popup_data = popup_queue.get_nowait()
+            tipo = popup_data.get('tipo')
+            mensaje = popup_data.get('mensaje')
+            titulo = popup_data.get('titulo', 'Notificación')
+            
+            if tipo == 'fail':
+                avisos.fail(mensaje, titulo=titulo)
+            elif tipo == 'pass':
+                avisos.pass_temporal(mensaje, titulo=titulo)
+    except queue.Empty:
+        pass
+    except Exception as e:
+        print(f"Error procesando popup: {e}")
+
+def mostrar_popup_fail(mensaje, titulo="Error"):
+    """Encola un popup de error para mostrarlo en el hilo principal"""
+    popup_queue.put({'tipo': 'fail', 'mensaje': mensaje, 'titulo': titulo})
+
+def mostrar_popup_pass(mensaje, titulo="Éxito"):
+    """Encola un popup de éxito para mostrarlo en el hilo principal"""
+    popup_queue.put({'tipo': 'pass', 'mensaje': mensaje, 'titulo': titulo})
+
 configuracion, modo_desarrollador = ST.Setting.obtener_puertos_comunicaciones()
 configuracion_MES = ST.Setting.obtener_parametros_MES()
 valores_definidos_taxis = ST.Setting.obtener_Comandos_PLC()
@@ -161,13 +191,14 @@ else:
     buf_prioritario = bytearray()
     dejarPasar = set(valores_definidos_taxis)
     sn_queue = queue.Queue()
-    lock_sn = threading.Lock()
+    lock_sn = threading.RLock()  # RLock permite reentrada desde el mismo hilo
     secuencia_activa = threading.Event()
 
     def reiniciar_ciclo():
         """Reinicia el ciclo completo para permitir un nuevo SN"""
         global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, lineas_log
         with lock_sn:
+            sn_previo = sn_actual
             iniciar_secuencia = False
             resultado_secuencia = None
             permitir_paso_mensajes = False
@@ -180,7 +211,8 @@ else:
                     cola_pendientes.get_nowait()
                 except:
                     break
-        escribir_en_consola("Abril-SIM", "Ciclo reiniciado. Listo para nuevo SN.")
+        escribir_en_consola("Abril-SIM", f"Ciclo reiniciado (SN previo: {sn_previo}). Listo para nuevo SN.")
+        escribir_en_consola_USER("Abril-SIM", "Sistema listo para siguiente SN.")
 
     def pedir_sn_async():
         """Hilo para pedir SN de forma asíncrona"""
@@ -203,20 +235,26 @@ else:
         """Hilo para procesar SNs desde la cola"""
         global permitir_paso_mensajes, sn_actual, lineas_log, breq_data_store
         
+        escribir_en_consola("APP", "Hilo procesar_sn_async iniciado")
+        
         while activador:
             try:
                 # Esperar un SN de la cola (bloqueante con timeout)
                 try:
                     sn_texto = sn_queue.get(timeout=0.5)
+                    escribir_en_consola("APP", f"SN obtenido de la cola: {sn_texto}")
                 except queue.Empty:
                     continue
                 
                 # Verificar si hay una secuencia activa
                 with lock_sn:
+                    estado_actual = (sn_actual, permitir_paso_mensajes)
                     if sn_actual is not None and permitir_paso_mensajes:
                         escribir_en_consola_USER("Abril-SIM", f"SN [{sn_actual}] en proceso. Esperá a que termine el ciclo.")
                         escribir_en_consola("APP", f"SN rechazado: {sn_texto} (hay secuencia activa)")
                         continue
+                
+                escribir_en_consola("APP", f"Estado antes de procesar: sn_actual={estado_actual[0]}, permitir={estado_actual[1]}")
                 
                 # Procesar el nuevo SN
                 escribir_en_consola("APP", f"Procesando SN: {sn_texto}")
@@ -231,7 +269,7 @@ else:
                     breq_msg = "ERROR"
                     breq_resp = str(e)
                     escribir_en_consola_USER("Abril-SIM", f"Error al validar SN: {e}")
-                    avisos.fail(f"Error al validar SN [{sn_texto}]", titulo="Error BREQ")
+                    mostrar_popup_fail(f"Error al validar SN [{sn_texto}]", titulo="Error BREQ")
                     continue
                 
                 # Actualizar estado global
@@ -247,7 +285,10 @@ else:
                         
                         escribir_en_consola("APP", f"✓ SN válido: {sn_actual} - Semáforo VERDE")
                         escribir_en_consola_USER("Abril-SIM", f"✓ SN [{sn_actual}] aceptado. Esperando secuencia...")
-                        
+                        mostrar_popup_pass(
+                            f"BREQ aceptado para SN [{sn_actual}]\nResultado: {breq_data_store[breq_resp]}",
+                            titulo="✓ BREQ Aceptado"
+                        )
                         # Enviar mensajes pendientes
                         mensajes_enviados = 0
                         while not cola_pendientes.empty():
@@ -263,7 +304,7 @@ else:
                     else:
                         escribir_en_consola("APP", f"✗ SN rechazado: {sn_texto} - {breq_msg}")
                         escribir_en_consola_USER("Abril-SIM", f"✗ SN [{sn_texto}] rechazado: {breq_msg}")
-                        avisos.fail(f"SN [{sn_texto}] rechazado:\n{breq_msg}", titulo="SN Inválido")
+                        mostrar_popup_fail(f"SN [{sn_texto}] rechazado:\n{breq_msg}", titulo="SN Inválido")
                         
                         # GUARDAR LOG DE BREQ RECHAZADO
                         try:
@@ -277,8 +318,10 @@ else:
                         except Exception as e:
                             escribir_en_consola("ERROR", f"Error al guardar log: {e}")
                             Controller_Error.Logs_Error.CapturarEvento("procesar_sn", "guardar_log_breq", str(e))
-                        
-                        reiniciar_ciclo()
+                
+                # Reiniciar ciclo FUERA del lock cuando el SN es rechazado
+                if not ok_breq:
+                    reiniciar_ciclo()
                         
             except Exception as e:
                 Controller_Error.Logs_Error.CapturarEvento("procesar_sn_async", "loop", str(e))
@@ -361,7 +404,8 @@ else:
                         escribir_en_consola("COLA", f"Encolado: {texto} (esperando SN válido)")
                         
             except Exception as e:
-                Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "loop", str(e))
+                #Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "loop", str(e))
+                escribir_en_consola("ERROR", f"Error en hilo_entrada: {e}")
                 time.sleep(0.02)
     
     def procesar_resultado_bcmp():
@@ -390,7 +434,7 @@ else:
             bcmp_msg = f"BCMP|ERROR"
             bcmp_resp = str(e)
             escribir_en_consola_USER("Abril-SIM", f"Error al enviar BCMP: {e}")
-            avisos.fail(f"No se pudo enviar el BCMP para SN [{sn_proc}]:\n{str(e)}", titulo="Error BCMP")
+            mostrar_popup_fail(f"No se pudo enviar el BCMP para SN [{sn_proc}]:\n{str(e)}", titulo="Error BCMP")
         
         respuesta_bcmp = bool(ok_bcmp)
         
@@ -421,7 +465,7 @@ else:
             escribir_en_consola("APP", f"✓ BCMP aceptado para SN [{sn_proc}] con {resultado}")
             escribir_en_consola_USER("Abril-SIM", f"✓ BCMP enviado exitosamente para SN [{sn_proc}]")
             try:
-                avisos.pass_temporal(
+                mostrar_popup_pass(
                     f"BCMP aceptado para SN [{sn_proc}]\nResultado: {resultado}",
                     titulo="✓ BCMP Aceptado"
                 )
@@ -430,7 +474,7 @@ else:
         else:
             escribir_en_consola("APP", f"✗ BCMP rechazado para SN [{sn_proc}] con {resultado}: {bcmp_msg}")
             escribir_en_consola_USER("Abril-SIM", f"✗ BCMP rechazado: {bcmp_msg}")
-            avisos.fail(
+            mostrar_popup_fail(
                 f"BCMP rechazado para SN [{sn_proc}]{bcmp_resp}",
                 titulo="BCMP Rechazado"
             )
@@ -469,6 +513,8 @@ else:
     # Bucle principal de monitoreo
     try:
         while activador:
+            procesar_popups()  # Procesar pop-ups pendientes desde hilos
+            root.update()  # Procesar eventos de tkinter
             time.sleep(0.1)  # Evitar consumo excesivo de CPU
     except KeyboardInterrupt:
         escribir_en_consola("APP", "Interrupción manual detectada. Cerrando...")

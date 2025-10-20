@@ -17,16 +17,23 @@ class MES_Socket:
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.settimeout(timeout)
             client_socket.connect((ip, int(port)))
+            client_socket.sendall((msg + "\n").encode('utf-8'))
+            respuesta = client_socket.recv(1024).decode('utf-8').replace("\n", "")
+            client_socket.close()
+            print(f"\n[SIM]: {respuesta}")
+            return respuesta
+        except socket.timeout as timeout_error:
+            print("\n[ Abril ] Timeout esperando respuesta de SIM")
+            if client_socket:
+                client_socket.close()
+            Controller_Error.Logs_Error.CapturarEvento("MES_Socket", "send_message", str(timeout_error))
+            raise TimeoutError(str(timeout_error))
         except Exception as fallo_conexion:
-            print("\n[ Abril ] Nose puedo Conectar con SIM ")
+            print("\n[ Abril ] No se pudo conectar con SIM")
             if client_socket:
                 client_socket.close()
             Controller_Error.Logs_Error.CapturarEvento("MES_Socket", "send_message", str(fallo_conexion))
-        client_socket.sendall((msg + "\n").encode('utf-8'))
-        respuesta = client_socket.recv(1024).decode('utf-8').replace("\n", "")
-        client_socket.close()
-        print(f"\n[SIM]: {respuesta}")
-        return respuesta
+            raise Exception(str(fallo_conexion))
 
 
 

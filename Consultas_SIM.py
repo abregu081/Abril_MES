@@ -26,27 +26,34 @@ class Consultas_SIM:
     def _breq_sn(self, sn):
         breq = self._formato_breq(sn)
         try:
-            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port,self.timeout, breq)
-        except TimeoutError as e:
-            print("TimeoutError: No se pudo conectar con SIM")
+            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port, self.timeout, breq)
+            ok = self._breq_ok(resp)
+            # DEVUELVE tupla para log
+            return ok, breq, resp
+        except (TimeoutError, ConnectionError) as e:
+            print(f"Error de conexión: {str(e)}")
             Controller_Error.Logs_Error.CapturarEvento("ConsultaSIM", "breq_sn", str(e))
-            return False
-        ok = self._breq_ok(resp)
-        # DEVUELVE tupla para log
-        return ok, breq, resp
+            return False, breq, f"ERROR: {str(e)}"
+        except Exception as e:
+            print(f"Error inesperado en BREQ: {str(e)}")
+            Controller_Error.Logs_Error.CapturarEvento("ConsultaSIM", "breq_sn", str(e))
+            return False, breq, f"ERROR: {str(e)}"
     #envio el bcmp a SIM
-
-    def _bcmp_sn(self, sn):
-        bcmp = self._formato_bcmp(sn)
+    def _bcmp_sn(self, sn, estado):
+        bcmp = self._formato_bcmp(sn, estado)
         try:
-            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port,self.timeout, bcmp)
-        except TimeoutError as e:
-            print("TimeoutError: No se pudo conectar con SIM")
-            Controller_Error.Logs_Error.CapturarEvento("Escaner", "bcmp_sn", str(e))
-
-        ok = self._back_ok(resp)
-        # DEVUELVE tupla para log
-        return ok, bcmp, resp
+            resp = MES.MES_Socket.enviar_mensaje(self.ip, self.port, self.timeout, bcmp)
+            ok = self._back_ok(resp)
+            # DEVUELVE tupla para log
+            return ok, bcmp, resp
+        except (TimeoutError, ConnectionError) as e:
+            print(f"Error de conexión en BCMP: {str(e)}")
+            Controller_Error.Logs_Error.CapturarEvento("ConsultaSIM", "bcmp_sn", str(e))
+            return False, bcmp, f"ERROR: {str(e)}"
+        except Exception as e:
+            print(f"Error inesperado en BCMP: {str(e)}")
+            Controller_Error.Logs_Error.CapturarEvento("ConsultaSIM", "bcmp_sn", str(e))
+            return False, bcmp, f"ERROR: {str(e)}"
 
     
     # ─────────────────────  Se ejecuta directamente Breq y el Bcmp  ─────────────────────────
