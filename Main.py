@@ -44,6 +44,13 @@ def mostrar_popup_fail(mensaje, titulo="Error"):
     """Encola un popup de error para mostrarlo en el hilo principal"""
     popup_queue.put({'tipo': 'fail', 'mensaje': mensaje, 'titulo': titulo})
 
+def mostrar_popup_timeout(mensaje, titulo="Timeout"):
+    """Encola un popup de timeout para mostrarlo en el hilo principal"""
+    popup_queue.put({'tipo': 'timeout', 'mensaje': mensaje, 'titulo': titulo})
+
+    """Encola un popup de timeout para mostrarlo en el hilo principal"""
+    popup_queue.put({'tipo': 'timeout', 'mensaje': mensaje, 'titulo': titulo})
+
 def mostrar_popup_pass(mensaje, titulo="Éxito"):
     """Encola un popup de éxito para mostrarlo en el hilo principal"""
     popup_queue.put({'tipo': 'pass', 'mensaje': mensaje, 'titulo': titulo})
@@ -96,8 +103,8 @@ def escribir_en_consola_USER(tag, msg):
     if modo_desarrollador == "OFF":
         print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] [{tag}] {msg}", flush=True)
 
-def plc_a_pc(PLC_salida,Ventrada, term = b'\r'):
-    global activador
+def plc_a_pc(PLC_salida, Ventrada, term = b'\r'):
+    global activador, esperar_validacion_sn, in00_recibido, out03_recibido, sn_validado
     buf = bytearray()
     while activador:
         try:
@@ -113,12 +120,32 @@ def plc_a_pc(PLC_salida,Ventrada, term = b'\r'):
                     del buf[:pos+len(term)]
                     texto = frame.decode('utf-8', errors="ignore").strip()
                     mensajes_recibidos.append(texto)
+                    
+                    # DETECTAR SEÑALES DEL PLC (lo que el PLC envía a la APP)
+                    # Señal 1: IN00 : 1
+                    if "IN00 : 1" in texto or "IN00:1" in texto.replace(" ", "") or "in00:1" in texto.lower():
+                        in00_recibido = True
+                        escribir_en_consola("PLC→APP", f"Señal detectada: {texto}")
+                        escribir_en_consola_USER("Abril-SIM", "Señal 1 detectada del PLC (IN00)")
+                    
+                    # Señal 2: OUT03 : ON
+                    if "OUT03 : ON" in texto or "OUT03:ON" in texto.replace(" ", "") or "out03:on" in texto.lower():
+                        out03_recibido = True
+                        escribir_en_consola("PLC→APP", f"Señal detectada: {texto}")
+                        
+                        # Solo activar espera de SN si ambas señales fueron recibidas y no hay SN validado
+                        if in00_recibido and out03_recibido and not sn_validado:
+                            esperar_validacion_sn = True
+                            escribir_en_consola("APP", " AMBAS SEÑALES RECIBIDAS - SOLICITAR SN")
+                            escribir_en_consola_USER("Abril-SIM", "ESCANEAR SN PARA CONTINUAR")
+                    
+                    # Enviar mensaje a la PC (SIEMPRE, sin bloqueos)
                     try:
                         Ventrada.write(frame)
                     except Exception as e:
-                            Controller_Error.Logs_Error.CapturarEvento("", "plc2pc.write", str(e))
+                        Controller_Error.Logs_Error.CapturarEvento("plc_a_pc", "write", str(e))
         except Exception as e:
-                print(e)
+            print(e)
 
 
 os.makedirs(directorio_salida,exist_ok=True)
@@ -128,7 +155,11 @@ hilo_pc_a_plc = None
 hilo_plc_a_pc = None
 iniciar_secuencia = False
 resultado_secuencia = None
-permitir_paso_mensajes = False
+permitir_paso_mensajes = True  # CAMBIADO: Ahora inicia en TRUE (mensajes pasan libremente)
+esperar_validacion_sn = False   # NUEVO: Control para esperar SN después de señales PLC
+sn_validado = False             # NUEVO: Indica si el SN fue validado
+in00_recibido = False           # NUEVO: Flag para IN00 : 1
+out03_recibido = False          # NUEVO: Flag para OUT03 : ON
 cola_pendientes = queue.Queue()
 sn_actual = None
 lineas_log = []
@@ -195,13 +226,19 @@ else:
     secuencia_activa = threading.Event()
 
     def reiniciar_ciclo():
-        """Reinicia el ciclo completo para permitir un nuevo SN"""
+        """Reinicia el ciclo completo para permitir un nuevo SN y reinicia la secuencia del PLC"""
         global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, lineas_log
+        global esperar_validacion_sn, sn_validado, in00_recibido, out03_recibido
+        
         with lock_sn:
             sn_previo = sn_actual
             iniciar_secuencia = False
             resultado_secuencia = None
-            permitir_paso_mensajes = False
+            permitir_paso_mensajes = True   # Volver a permitir flujo libre
+            esperar_validacion_sn = False   # Reset del flag de espera
+            sn_validado = False             # Reset del flag de validación
+            in00_recibido = False           # Reset señal IN00
+            out03_recibido = False          # Reset señal OUT03
             sn_actual = None
             lineas_log = []
             secuencia_activa.clear()
@@ -211,6 +248,27 @@ else:
                     cola_pendientes.get_nowait()
                 except:
                     break
+        
+        # ENVIAR COMANDOS DE RESET AL PLC
+        escribir_en_consola("APP", "Enviando comandos de reset al PLC...")
+        comandos_reset = [
+            b'4od\r',   # Apagar OUT04
+            b'9in\r',   # Leer IN09
+            b'3od\r',   # Apagar OUT03 (señal crítica del atornillado)
+            b'5in\r',   # Leer IN05
+            b'7in\r'    # Leer IN07
+        ]
+        
+        try:
+            for idx, comando in enumerate(comandos_reset, 1):
+                PLC_salida.write(comando)
+                escribir_en_consola("APP→PLC", f"Reset {idx}/5: {comando.decode('utf-8').strip()}")
+                time.sleep(0.05)  # Pequeña pausa entre comandos
+            escribir_en_consola("APP", "✓ Comandos de reset enviados al PLC")
+        except Exception as e:
+            escribir_en_consola("ERROR", f"Error al enviar comandos de reset al PLC: {e}")
+            Controller_Error.Logs_Error.CapturarEvento("reiniciar_ciclo", "enviar_reset_plc", str(e))
+        
         escribir_en_consola("Abril-SIM", f"Ciclo reiniciado (SN previo: {sn_previo}). Listo para nuevo SN.")
         escribir_en_consola_USER("Abril-SIM", "Sistema listo para siguiente SN.")
 
@@ -234,11 +292,17 @@ else:
     def procesar_sn_async():
         """Hilo para procesar SNs desde la cola"""
         global permitir_paso_mensajes, sn_actual, lineas_log, breq_data_store
+        global esperar_validacion_sn, sn_validado
         
         escribir_en_consola("APP", "Hilo procesar_sn_async iniciado")
         
         while activador:
             try:
+                # Solo procesar SN cuando se solicite (después de las señales del PLC)
+                if not esperar_validacion_sn:
+                    time.sleep(0.1)
+                    continue
+                
                 # Esperar un SN de la cola (bloqueante con timeout)
                 try:
                     sn_texto = sn_queue.get(timeout=0.5)
@@ -248,13 +312,10 @@ else:
                 
                 # Verificar si hay una secuencia activa
                 with lock_sn:
-                    estado_actual = (sn_actual, permitir_paso_mensajes)
-                    if sn_actual is not None and permitir_paso_mensajes:
+                    if sn_actual is not None and sn_validado:
                         escribir_en_consola_USER("Abril-SIM", f"SN [{sn_actual}] en proceso. Esperá a que termine el ciclo.")
                         escribir_en_consola("APP", f"SN rechazado: {sn_texto} (hay secuencia activa)")
                         continue
-                
-                escribir_en_consola("APP", f"Estado antes de procesar: sn_actual={estado_actual[0]}, permitir={estado_actual[1]}")
                 
                 # Procesar el nuevo SN
                 escribir_en_consola("APP", f"Procesando SN: {sn_texto}")
@@ -269,7 +330,11 @@ else:
                     breq_msg = "ERROR"
                     breq_resp = str(e)
                     escribir_en_consola_USER("Abril-SIM", f"Error al validar SN: {e}")
-                    mostrar_popup_fail(f"Error al validar SN [{sn_texto}]", titulo="Error BREQ")
+                    mostrar_popup_fail(f"Error al validar SN [{sn_texto}] \n{breq_resp}", titulo="Error BREQ")
+                    # Resetear flags para permitir nuevo intento
+                    with lock_sn:
+                        esperar_validacion_sn = False
+                        sn_validado = False
                     continue
                 
                 # Actualizar estado global
@@ -277,19 +342,22 @@ else:
                     if ok_breq:
                         sn_actual = sn_texto
                         lineas_log = []
-                        permitir_paso_mensajes = True
+                        sn_validado = True              # SN validado correctamente
+                        esperar_validacion_sn = False   # Ya no esperar más validación
+                        permitir_paso_mensajes = True   # Permitir mensajes
                         secuencia_activa.set()
                         
                         # GUARDAR DATOS DE BREQ PARA EL LOG
                         breq_data_store[sn_actual] = (ok_breq, breq_msg, breq_resp)
                         
-                        escribir_en_consola("APP", f"✓ SN válido: {sn_actual} - Semáforo VERDE")
-                        escribir_en_consola_USER("Abril-SIM", f"✓ SN [{sn_actual}] aceptado. Esperando secuencia...")
+                        escribir_en_consola("APP", f"✓ SN válido: {sn_actual} - Continuando secuencia")
+                        escribir_en_consola_USER("Abril-SIM", f"✓ SN [{sn_actual}] aceptado. Continuando prueba...")
                         mostrar_popup_pass(
-                            f"BREQ aceptado para SN [{sn_actual}]\nResultado: {breq_data_store[breq_resp]}",
-                            titulo="✓ BREQ Aceptado"
+                            f"SN [{sn_actual}] validado correctamente",
+                            titulo="✓ SN Aceptado"
                         )
-                        # Enviar mensajes pendientes
+                        
+                        # Enviar mensajes pendientes (si hay)
                         mensajes_enviados = 0
                         while not cola_pendientes.empty():
                             try:
@@ -303,8 +371,9 @@ else:
                             escribir_en_consola("APP", f"Enviados {mensajes_enviados} mensajes pendientes")
                     else:
                         escribir_en_consola("APP", f"✗ SN rechazado: {sn_texto} - {breq_msg}")
-                        escribir_en_consola_USER("Abril-SIM", f"✗ SN [{sn_texto}] rechazado: {breq_msg}")
-                        mostrar_popup_fail(f"SN [{sn_texto}] rechazado:\n{breq_msg}", titulo="SN Inválido")
+                        escribir_en_consola("APP", f"   Respuesta completa BREQ: {breq_resp}")
+                        escribir_en_consola_USER("Abril-SIM", f"✗ SN [{sn_texto}] rechazado por SIM.")
+                        mostrar_popup_fail(f"SN [{sn_texto}] rechazado:\n{breq_msg}\n\nEl ciclo se reiniciará completamente.", titulo="SN Inválido - Reiniciando")
                         
                         # GUARDAR LOG DE BREQ RECHAZADO
                         try:
@@ -318,18 +387,37 @@ else:
                         except Exception as e:
                             escribir_en_consola("ERROR", f"Error al guardar log: {e}")
                             Controller_Error.Logs_Error.CapturarEvento("procesar_sn", "guardar_log_breq", str(e))
-                
-                # Reiniciar ciclo FUERA del lock cuando el SN es rechazado
-                if not ok_breq:
-                    reiniciar_ciclo()
+                        
+                        # LIMPIAR COLA DE MENSAJES PENDIENTES
+                        mensajes_descartados = 0
+                        while not cola_pendientes.empty():
+                            try:
+                                cola_pendientes.get_nowait()
+                                mensajes_descartados += 1
+                            except:
+                                break
+                        
+                        if mensajes_descartados > 0:
+                            escribir_en_consola("APP", f"✓ Cola limpiada: {mensajes_descartados} mensajes descartados")
+                        else:
+                            escribir_en_consola("APP", "✓ No había mensajes pendientes para descartar")
+                        
+                        # OPCIÓN B: REINICIAR CICLO COMPLETO AL RECHAZAR SN
+                        escribir_en_consola("APP", "═══════════════════════════════════════════")
+                        escribir_en_consola("APP", "║  SN RECHAZADO - REINICIANDO CICLO      ║")
+                        escribir_en_consola("APP", "═══════════════════════════════════════════")
+                        escribir_en_consola_USER("Abril-SIM", "Ciclo reiniciado. Sistema listo para nueva prueba.")
+                        
+                        # Llamar a reiniciar_ciclo para resetear todo
+                        reiniciar_ciclo()
                         
             except Exception as e:
                 Controller_Error.Logs_Error.CapturarEvento("procesar_sn_async", "loop", str(e))
                 time.sleep(0.1)
 
     def hilo_mensajes_entrada():
-        """Hilo principal para procesar mensajes de entrada y lógica de secuencia"""
-        global iniciar_secuencia, resultado_secuencia, sn_actual, permitir_paso_mensajes
+        """Hilo para procesar mensajes de entrada PC→PLC - BLOQUEA SI ESPERA VALIDACIÓN SN"""
+        global iniciar_secuencia, resultado_secuencia, sn_actual, sn_validado, esperar_validacion_sn
         
         while activador:
             try:
@@ -357,28 +445,29 @@ else:
                     if not texto:
                         continue
                     
-                    # Mensajes prioritarios SIEMPRE pasan
-                    if texto in dejarPasar:
-                        try:
-                            PLC_salida.write(frame)
-                            #escribir_en_consola("PRIORITARIO", f"→ {texto}")
-                        except Exception as e:
-                            Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "write_prioritario", str(e))
+                    # VERIFICAR SI SE DEBE BLOQUEAR EL FLUJO
+                    with lock_sn:
+                        esperando_sn = esperar_validacion_sn
+                        sn_ok = sn_validado
+                    
+                    # SI ESTÁ ESPERANDO VALIDACIÓN Y NO HAY SN VALIDADO: BLOQUEAR
+                    if esperando_sn and not sn_ok:
+                        escribir_en_consola("APP", f"⏸ Mensaje bloqueado (esperando SN): {texto}")
+                        cola_pendientes.put(frame)
                         continue
                     
-                    # Mensajes normales: dependen del semáforo
+                    # ENVIAR MENSAJE AL PLC
+                    try:
+                        PLC_salida.write(frame)
+                    except Exception as e:
+                        Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "write", str(e))
+                    
+                    # Detectar eventos de la secuencia (solo si SN está validado)
                     with lock_sn:
-                        paso_permitido = permitir_paso_mensajes
+                        validado = sn_validado
                         sn_proc = sn_actual
                     
-                    if paso_permitido:
-                        try:
-                            PLC_salida.write(frame)
-                            escribir_en_consola("NORMAL", f"→ {texto}")
-                        except Exception as e:
-                            Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "write_normal", str(e))
-                        
-                        # Detectar eventos de la secuencia
+                    if validado and sn_proc:
                         if texto == "3oe":
                             with lock_sn:
                                 iniciar_secuencia = True
@@ -398,14 +487,10 @@ else:
                             escribir_en_consola("APP", f"Resultado = PASS (12oe) para SN [{sn_proc}]")
                             escribir_en_consola_USER("Abril-SIM", f"Test PASS para SN [{sn_proc}]")
                             procesar_resultado_bcmp()
-                    else:
-                        # Sin SN válido: encolar mensaje
-                        cola_pendientes.put(frame)
-                        escribir_en_consola("COLA", f"Encolado: {texto} (esperando SN válido)")
                         
             except Exception as e:
-                #Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "loop", str(e))
                 escribir_en_consola("ERROR", f"Error en hilo_entrada: {e}")
+                Controller_Error.Logs_Error.CapturarEvento("hilo_entrada", "loop", str(e))
                 time.sleep(0.02)
     
     def procesar_resultado_bcmp():
@@ -428,6 +513,7 @@ else:
         try:
             consultas = CS.Consultas_SIM(sn_proc)
             ok_bcmp, bcmp_msg, bcmp_resp = consultas._check_bcmp(resultado)
+
         except Exception as e:
             Controller_Error.Logs_Error.CapturarEvento("procesar_bcmp", "check_bcmp", str(e))
             ok_bcmp = False
@@ -460,23 +546,32 @@ else:
             escribir_en_consola("ERROR", f"Error al guardar log: {e}")
             Controller_Error.Logs_Error.CapturarEvento("procesar_bcmp", "guardar_log", str(e))
         
-        # Mostrar pop-ups y mensajes
+        # MOSTRAR POP-UPS Y MENSAJES SEGÚN RESULTADO
         if respuesta_bcmp:
+            # BCMP ACEPTADO
             escribir_en_consola("APP", f"✓ BCMP aceptado para SN [{sn_proc}] con {resultado}")
             escribir_en_consola_USER("Abril-SIM", f"✓ BCMP enviado exitosamente para SN [{sn_proc}]")
-            try:
+            
+            # Pop-up según el resultado del test
+            if resultado == "PASS":
                 mostrar_popup_pass(
-                    f"BCMP aceptado para SN [{sn_proc}]\nResultado: {resultado}",
-                    titulo="✓ BCMP Aceptado"
+                    f"✓ Test APROBADO\n\nSN: {sn_proc}\nResultado: PASS\nBCMP: Aceptado\n\nSIM: {bcmp_resp}",
+                    titulo="✓ Test PASS - BCMP Aceptado"
                 )
-            except Exception as e:
-                Controller_Error.Logs_Error.CapturarEvento("procesar_bcmp", "popup_pass", str(e))
+            else:  # resultado == "FAIL"
+                mostrar_popup_fail(
+                    f"✗ Test REPROBADO\n\nSN: {sn_proc}\nResultado: FAIL\nBCMP: Aceptado\n\nSIM: {bcmp_resp}",
+                    titulo="✗ Test FAIL - BCMP Aceptado"
+                )
         else:
+            # BCMP RECHAZADO
             escribir_en_consola("APP", f"✗ BCMP rechazado para SN [{sn_proc}] con {resultado}: {bcmp_msg}")
             escribir_en_consola_USER("Abril-SIM", f"✗ BCMP rechazado: {bcmp_msg}")
+            
+            # Siempre mostrar popup de error cuando BCMP es rechazado
             mostrar_popup_fail(
-                f"BCMP rechazado para SN [{sn_proc}]{bcmp_resp}",
-                titulo="BCMP Rechazado"
+                f"✗ BCMP RECHAZADO\n\nSN: {sn_proc}\nResultado del test: {resultado}\n\nMotivo: {bcmp_msg}\n\nSIM: {bcmp_resp}",
+                titulo="✗ Error - BCMP Rechazado"
             )
         
         reiniciar_ciclo()

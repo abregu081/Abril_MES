@@ -7,6 +7,85 @@ class PopUpAvisos:
     def __init__(self, titulo_app: str = "Sistema MES"):
         self.titulo_app = titulo_app
     
+
+    def timeout(
+            self,
+            mensaje: str,
+            titulo: Optional[str] = None,
+            ancho: int = 500,
+            alto: int = 300
+    ) -> None:
+        titulo = titulo or "TIMEOUT"
+        
+        popup = tk.Toplevel()
+        popup.title(titulo)
+        popup.geometry(f"{ancho}x{alto}")
+        popup.resizable(False, False)
+        popup.configure(bg="#000000")  # Fondo rojo claro
+        
+        # Centrar la ventana
+        popup.update_idletasks()
+        x = (popup.winfo_screenwidth() // 2) - (ancho // 2)
+        y = (popup.winfo_screenheight() // 2) - (alto // 2)
+        popup.geometry(f"{ancho}x{alto}+{x}+{y}")
+        
+        # Hacer la ventana modal
+        popup.transient()
+        popup.grab_set()
+        
+        # Frame para el contenido
+        frame_contenido = tk.Frame(popup, bg="#000000", padx=20, pady=20)
+        frame_contenido.pack(expand=True, fill=tk.BOTH)
+        
+        # Etiqueta del título con icono
+        label_titulo = tk.Label(
+            frame_contenido,
+            text="TIMEOUT",
+            font=("Arial", 20, "bold"),
+            fg="#e5ff00",
+            bg="#000000"
+        )
+        label_titulo.pack(pady=(0, 10))
+        
+        # Etiqueta del mensaje
+        label_mensaje = tk.Label(
+            frame_contenido, 
+            text=mensaje, 
+            wraplength=ancho-40,
+            justify=tk.CENTER,
+            font=("Arial", 11),
+            fg="#FFFFFF",
+            bg="#000000"
+        )
+        label_mensaje.pack(expand=True)
+        
+        # Frame para el botón
+        frame_boton = tk.Frame(popup, bg="#000000", pady=10)
+        frame_boton.pack()
+        
+        # Botón Cerrar
+        btn_cerrar = tk.Button(
+            frame_boton, 
+            text="Cerrar", 
+            command=popup.destroy,
+            width=12,
+            bg="#000000",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            relief=tk.RAISED,
+            bd=2
+        )
+        btn_cerrar.pack()
+        
+        # Enfocar el botón
+        btn_cerrar.focus_set()
+        
+        try:
+            popup.bell()
+        except:
+            pass
+        popup.wait_window()
+
     def fail(
         self, 
         mensaje: str, 
@@ -160,14 +239,6 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.withdraw()  # Ocultar la ventana principal
     avisos = PopUpAvisos(titulo_app="Sistema MES")
-    avisos.pass_temporal(
-        "¡Prueba superada exitosamente!\n\nTodos los parámetros están dentro del rango esperado.",
-        titulo="✓ Test Aprobado"
-    )
-    
-    avisos.fail(
-        "La prueba ha fallado.\n\nError: Los valores están fuera del rango permitido.\nPor favor, revise los parámetros de configuración.",
-        titulo="Test Fallido"
-    )
+    avisos.timeout("Se ha producido un timeout en la operación.", titulo="Tiempo Agotado")
 
     

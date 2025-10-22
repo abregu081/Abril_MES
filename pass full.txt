@@ -1,0 +1,1040 @@
+[20/10/2025 09:57:52] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:52] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:52] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:52] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:52] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:52] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:52] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:52] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:52] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:52] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:52] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:52] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:52] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:52] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:53] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:53] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:57:53] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:57:53] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:53] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:53] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:53] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:53] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:53] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:53] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:53] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:53] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:53] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:53] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:53] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:53] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:53] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:54] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:57:54] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:57:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:55] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:57:55] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:57:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:56] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:57:57] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:57:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:58] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:57:58] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:57:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:59] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:57:59] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:57:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:57:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:57:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:57:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:57:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:00] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:00] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:00] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:00] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:00] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:00] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:00] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:00] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:00] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:00] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:00] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:00] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:00] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:00] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:00] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:00] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:00] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:00] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:00] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:00] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:01] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:01] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:01] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:01] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:01] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:01] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:01] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:01] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:01] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:01] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:01] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:01] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:01] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:01] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:01] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:01] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:01] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:01] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:01] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:01] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:01] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:01] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:01] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:01] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:02] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:02] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:02] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:02] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:02] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:02] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:02] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:02] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:02] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:02] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:02] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:02] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:02] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:02] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:02] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:02] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:02] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:02] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:02] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:02] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:03] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:03] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:03] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:03] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:03] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:03] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:03] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:03] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:03] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:03] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:03] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:03] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:03] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:03] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:03] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:03] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:03] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:03] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:03] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:03] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:03] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:03] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:04] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:04] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:04] Read data (COM2) 
+    49 4e 30 30 20 3a 20 31 20 0a 0d                  IN00 : 1 ..      
+[20/10/2025 09:58:04] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:04] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:04] Written data (COM2) 
+    31 30 6f 64 0d                                    10od.            
+[20/10/2025 09:58:04] Read data (COM2) 
+    4f 55 54 31 30 20 3a 20 4f 46 46 20 0a 0d         OUT10 : OFF ..   
+[20/10/2025 09:58:04] Written data (COM2) 
+    31 32 6f 64 0d                                    12od.            
+[20/10/2025 09:58:04] Read data (COM2) 
+    4f 55 54 31 32 20 3a 20 4f 46 46 20 0a 0d         OUT12 : OFF ..   
+[20/10/2025 09:58:04] Written data (COM2) 
+    33 6f 65 0d                                       3oe.             
+[20/10/2025 09:58:04] Read data (COM2) 
+    4f 55 54 30 33 20 3a 20 4f 4e 20 0a 0d            OUT03 : ON ..    
+[20/10/2025 09:58:04] Written data (COM2) 
+    34 69 6e 0d                                       4in.             
+[20/10/2025 09:58:04] Read data (COM2) 
+    49 4e 30 34 20 3a 20 30 20 0a 0d                  IN04 : 0 ..      
+[20/10/2025 09:58:04] Written data (COM2) 
+    34 69 6e 0d                                       4in.             
+[20/10/2025 09:58:04] Read data (COM2) 
+    49 4e 30 34 20 3a 20 31 20 0a 0d                  IN04 : 1 ..      
+[20/10/2025 09:58:04] Written data (COM2) 
+    36 69 6e 0d                                       6in.             
+[20/10/2025 09:58:04] Read data (COM2) 
+    49 4e 30 36 20 3a 20 31 20 0a 0d                  IN06 : 1 ..      
+[20/10/2025 09:58:05] Written data (COM2) 
+    38 69 6e 0d                                       8in.             
+[20/10/2025 09:58:05] Read data (COM2) 
+    49 4e 30 38 20 3a 20 31 20 0a 0d                  IN08 : 1 ..      
+[20/10/2025 09:58:05] Written data (COM2) 
+    31 30 6f 64 0d                                    10od.            
+[20/10/2025 09:58:05] Read data (COM2) 
+    4f 55 54 31 30 20 3a 20 4f 46 46 20 0a 0d         OUT10 : OFF ..   
+[20/10/2025 09:58:05] Written data (COM2) 
+    34 6f 65 0d                                       4oe.             
+[20/10/2025 09:58:05] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 4e 20 0a 0d            OUT04 : ON ..    
+[20/10/2025 09:58:05] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:05] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:06] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:06] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:13] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:13] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:13] Written data (COM2) 
+    31 34 6f 65 0d                                    14oe.            
+[20/10/2025 09:58:13] Read data (COM2) 
+    4f 55 54 31 34 20 3a 20 4f 4e 20 0a 0d            OUT14 : ON ..    
+[20/10/2025 09:58:14] Written data (COM2) 
+    31 34 6f 64 0d                                    14od.            
+[20/10/2025 09:58:15] Read data (COM2) 
+    4f 55 54 31 34 20 3a 20 4f 46 46 20 0a 0d         OUT14 : OFF ..   
+[20/10/2025 09:58:15] Written data (COM2) 
+    31 34 6f 65 0d                                    14oe.            
+[20/10/2025 09:58:15] Read data (COM2) 
+    4f 55 54 31 34 20 3a 20 4f 4e 20 0a 0d            OUT14 : ON ..    
+[20/10/2025 09:58:16] Written data (COM2) 
+    31 34 6f 64 0d                                    14od.            
+[20/10/2025 09:58:16] Read data (COM2) 
+    4f 55 54 31 34 20 3a 20 4f 46 46 20 0a 0d         OUT14 : OFF ..   
+[20/10/2025 09:58:16] Written data (COM2) 
+    31 34 6f 65 0d                                    14oe.            
+[20/10/2025 09:58:16] Read data (COM2) 
+    4f 55 54 31 34 20 3a 20 4f 4e 20 0a 0d            OUT14 : ON ..    
+[20/10/2025 09:58:17] Written data (COM2) 
+    31 34 6f 64 0d                                    14od.            
+[20/10/2025 09:58:17] Read data (COM2) 
+    4f 55 54 31 34 20 3a 20 4f 46 46 20 0a 0d         OUT14 : OFF ..   
+[20/10/2025 09:58:28] Written data (COM2) 
+    34 6f 64 0d                                       4od.             
+[20/10/2025 09:58:28] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 46 46 20 0a 0d         OUT04 : OFF ..   
+[20/10/2025 09:58:28] Written data (COM2) 
+    38 69 6e 0d                                       8in.             
+[20/10/2025 09:58:28] Read data (COM2) 
+    49 4e 30 38 20 3a 20 31 20 0a 0d                  IN08 : 1 ..      
+[20/10/2025 09:58:28] Written data (COM2) 
+    31 30 6f 64 0d                                    10od.            
+[20/10/2025 09:58:28] Read data (COM2) 
+    4f 55 54 31 30 20 3a 20 4f 46 46 20 0a 0d         OUT10 : OFF ..   
+[20/10/2025 09:58:28] Written data (COM2) 
+    34 6f 65 0d                                       4oe.             
+[20/10/2025 09:58:29] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 4e 20 0a 0d            OUT04 : ON ..    
+[20/10/2025 09:58:29] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:29] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:29] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:29] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:33] Written data (COM2) 
+    34 6f 64 0d                                       4od.             
+[20/10/2025 09:58:33] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 46 46 20 0a 0d         OUT04 : OFF ..   
+[20/10/2025 09:58:34] Written data (COM2) 
+    38 69 6e 0d                                       8in.             
+[20/10/2025 09:58:34] Read data (COM2) 
+    49 4e 30 38 20 3a 20 31 20 0a 0d                  IN08 : 1 ..      
+[20/10/2025 09:58:34] Written data (COM2) 
+    31 30 6f 64 0d                                    10od.            
+[20/10/2025 09:58:34] Read data (COM2) 
+    4f 55 54 31 30 20 3a 20 4f 46 46 20 0a 0d         OUT10 : OFF ..   
+[20/10/2025 09:58:34] Written data (COM2) 
+    34 6f 65 0d                                       4oe.             
+[20/10/2025 09:58:34] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 4e 20 0a 0d            OUT04 : ON ..    
+[20/10/2025 09:58:35] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:35] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:35] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:35] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:39] Written data (COM2) 
+    34 6f 64 0d                                       4od.             
+[20/10/2025 09:58:39] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 46 46 20 0a 0d         OUT04 : OFF ..   
+[20/10/2025 09:58:40] Written data (COM2) 
+    38 69 6e 0d                                       8in.             
+[20/10/2025 09:58:40] Read data (COM2) 
+    49 4e 30 38 20 3a 20 31 20 0a 0d                  IN08 : 1 ..      
+[20/10/2025 09:58:40] Written data (COM2) 
+    31 30 6f 64 0d                                    10od.            
+[20/10/2025 09:58:40] Read data (COM2) 
+    4f 55 54 31 30 20 3a 20 4f 46 46 20 0a 0d         OUT10 : OFF ..   
+[20/10/2025 09:58:40] Written data (COM2) 
+    34 6f 65 0d                                       4oe.             
+[20/10/2025 09:58:40] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 4e 20 0a 0d            OUT04 : ON ..    
+[20/10/2025 09:58:41] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:41] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:41] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:41] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:45] Written data (COM2) 
+    34 6f 64 0d                                       4od.             
+[20/10/2025 09:58:45] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 46 46 20 0a 0d         OUT04 : OFF ..   
+[20/10/2025 09:58:46] Written data (COM2) 
+    38 69 6e 0d                                       8in.             
+[20/10/2025 09:58:46] Read data (COM2) 
+    49 4e 30 38 20 3a 20 31 20 0a 0d                  IN08 : 1 ..      
+[20/10/2025 09:58:46] Written data (COM2) 
+    31 30 6f 64 0d                                    10od.            
+[20/10/2025 09:58:46] Read data (COM2) 
+    4f 55 54 31 30 20 3a 20 4f 46 46 20 0a 0d         OUT10 : OFF ..   
+[20/10/2025 09:58:46] Written data (COM2) 
+    34 6f 65 0d                                       4oe.             
+[20/10/2025 09:58:46] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 4e 20 0a 0d            OUT04 : ON ..    
+[20/10/2025 09:58:47] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:47] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:47] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:47] Read data (COM2) 
+    49 4e 30 39 20 3a 20 31 20 0a 0d                  IN09 : 1 ..      
+[20/10/2025 09:58:51] Written data (COM2) 
+    34 6f 64 0d                                       4od.             
+[20/10/2025 09:58:51] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 46 46 20 0a 0d         OUT04 : OFF ..   
+[20/10/2025 09:58:52] Written data (COM2) 
+    31 32 6f 65 0d                                    12oe.            
+[20/10/2025 09:58:52] Read data (COM2) 
+    4f 55 54 31 32 20 3a 20 4f 4e 20 0a 0d            OUT12 : ON ..    
+[20/10/2025 09:58:53] Written data (COM2) 
+    34 6f 64 0d                                       4od.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    4f 55 54 30 34 20 3a 20 4f 46 46 20 0a 0d         OUT04 : OFF ..   
+[20/10/2025 09:58:53] Written data (COM2) 
+    39 69 6e 0d                                       9in.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    49 4e 30 39 20 3a 20 30 20 0a 0d                  IN09 : 0 ..      
+[20/10/2025 09:58:53] Written data (COM2) 
+    33 6f 64 0d                                       3od.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    4f 55 54 30 33 20 3a 20 4f 46 46 20 0a 0d         OUT03 : OFF ..   
+[20/10/2025 09:58:53] Written data (COM2) 
+    35 69 6e 0d                                       5in.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    49 4e 30 35 20 3a 20 30 20 0a 0d                  IN05 : 0 ..      
+[20/10/2025 09:58:53] Written data (COM2) 
+    35 69 6e 0d                                       5in.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    49 4e 30 35 20 3a 20 31 20 0a 0d                  IN05 : 1 ..      
+[20/10/2025 09:58:53] Written data (COM2) 
+    37 69 6e 0d                                       7in.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    49 4e 30 37 20 3a 20 31 20 0a 0d                  IN07 : 1 ..      
+[20/10/2025 09:58:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:53] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:53] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:53] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:53] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:54] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:54] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:54] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:54] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:54] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:55] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:55] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:55] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:55] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:55] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:56] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:56] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:56] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:56] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:56] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:56] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:57] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:57] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:57] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:57] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:57] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:57] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:58] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:58] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:58] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:58] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:58] Written data (COM2) 
+    31 36 69 6e 0d                                    16in.            
+[20/10/2025 09:58:59] Read data (COM2) 
+    49 4e 31 35 2d 30 20 3a 20 30 30 30 30 31 30 30   IN15-0 : 0000100 
+    31 31 30 31 30 30 30 30 30 20 0a 0d               110100000 ..     
+[20/10/2025 09:58:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:59] Written data (COM2) 
+    65 63 0d                                          ec.              
+[20/10/2025 09:58:59] Read data (COM2) 
+    30 30 3a 20 45 4d 45 52 47 45 4e 43 59 20 4f 46   00: EMERGENCY OF 
+    46 20 0a 0d                                       F ..             
+[20/10/2025 09:58:59] Written data (COM2) 
+    30 69 6e 0d                                       0in.             
+[20/10/2025 09:58:59] Read data (COM2) 
+    49 4e 30 30 20 3a 20 30 20 0a 0d                  IN00 : 0 ..      
+[20/10/2025 09:58:59] Written data (COM2) 
+    65 63 0d                                          ec.              
