@@ -119,3 +119,36 @@ class Setting:
                 "CapturarDatosSetting", "obtener_puertos_comunicaciones", str(e)
             )
             return [], None
+    
+    @staticmethod
+    def obtener_datos_escaner():
+        try:
+            archivo_txt = Setting.Capturar_datos_setting("Setting_Escaner.ini")
+            if archivo_txt is None:
+                return None, None
+            port = None
+            baudrate = None
+            for raw in archivo_txt:
+                line = raw.strip()
+                if not line or line.startswith('//') or line.startswith('#'):
+                    continue
+                if line.lower().startswith('port:'):
+                    try:
+                        _, v = line.split(':', 1)
+                        port = v.strip()
+                    except Exception:
+                        pass
+                elif line.lower().startswith('baudrate:'):
+                    try:
+                        _, v = line.split(':', 1)
+                        baudrate = int(v.strip())
+                    except Exception:
+                        pass
+            return port, baudrate
+
+        except Exception as e:
+            Controller_Error.Logs_Error.CapturarEvento(
+                "CapturarDatosSetting", "obtener_datos_escaner", str(e)
+            )
+            return None, None
+        

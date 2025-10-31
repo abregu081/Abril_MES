@@ -20,6 +20,7 @@ python "%_PATH_SOURCE%setup.py" build
 Copy "%_PATH_SOURCE%Setting.ini" "%_PATH_SOURCE%build\%_WIN_%"
 Copy "%_PATH_SOURCE%MES_settings.ini" "%_PATH_SOURCE%build\%_WIN_%"
 Copy "%_PATH_SOURCE%comandos.ini" "%_PATH_SOURCE%build\%_WIN_%"
+Copy "%_PATH_SOURCE%Setting_Escaner.ini" "%_PATH_SOURCE%build\%_WIN_%"
 
 @echo.
 @echo * Proceso Terminado *

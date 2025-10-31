@@ -14,9 +14,17 @@ import LogCreator as LG
 import tkinter as tk
 from tkinter import messagebox
 from typing import Optional, Callable
+from CierreAutomatico import CerrarVentanaAutomatica
+from VentanaTopMost import VentanaTopMost, VentanaTkinterTopMost
+import win32con
+import win32gui
 
 root = tk.Tk()
 root.withdraw()
+
+# Hacer que todas las ventanas tkinter (popups) sean topmost
+VentanaTkinterTopMost.set_topmost(root)
+
 avisos = AT.PopUpAvisos(titulo_app="Abril SIM")
 
 # Cola thread-safe para mostrar pop-ups desde el hilo principal
@@ -55,14 +63,38 @@ def mostrar_popup_pass(mensaje, titulo="Éxito"):
     """Encola un popup de éxito para mostrarlo en el hilo principal"""
     popup_queue.put({'tipo': 'pass', 'mensaje': mensaje, 'titulo': titulo})
 
+def atraer_al_frente(ventana,HWND:int) -> bool:
+    try:
+            if ventana.winfo_exists():
+                    # HWND_TOPMOST = -1 significa "siempre al frente"
+                    win32gui.SetWindowPos(
+                        HWND,
+                        win32con.HWND_TOPMOST,  # -1
+                        0, 0, 0, 0,
+                        win32con.SWP_NOMOVE | win32con.SWP_NOSIZE | win32con.SWP_SHOWWINDOW
+                    )
+            return True
+    except Exception as e:
+            return False
+
 configuracion, modo_desarrollador = ST.Setting.obtener_puertos_comunicaciones()
 configuracion_MES = ST.Setting.obtener_parametros_MES()
 valores_definidos_taxis = ST.Setting.obtener_Comandos_PLC()
 Activador_MES = configuracion_MES["habilitar_mes"]
 directorio_salida = configuracion_MES["directorio_logs"]
+puerto_escaner, baudrate_escaner = ST.Setting.obtener_datos_escaner()
 
+print(puerto_escaner, baudrate_escaner)
 # Inicializar el gestor de logs
 logger = LG.LogManager(directorio_salida, auto_rotate=True)
+
+# Inicializar el auto-closer de ventanas emergentes
+auto_closer = CerrarVentanaAutomatica(
+    titulos_ventanas=["ERROR", "Error", "error"],
+    texto_boton="OK",
+    intervalo=0.5  # Revisar cada 500ms para respuesta rápida
+)
+
 
 if Activador_MES == "ON":
     Activador_MES = True
@@ -104,7 +136,7 @@ def escribir_en_consola_USER(tag, msg):
         print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] [{tag}] {msg}", flush=True)
 
 def plc_a_pc(PLC_salida, Ventrada, term = b'\r'):
-    global activador, esperar_validacion_sn, in00_recibido, out03_recibido, sn_validado
+    global activador, esperar_validacion_sn, in00_recibido, out03_recibido, sn_validado, Escaner
     buf = bytearray()
     while activador:
         try:
@@ -127,6 +159,18 @@ def plc_a_pc(PLC_salida, Ventrada, term = b'\r'):
                         in00_recibido = True
                         escribir_en_consola("PLC→APP", f"Señal detectada: {texto}")
                         escribir_en_consola_USER("Abril-SIM", "Señal 1 detectada del PLC (IN00)")
+                        
+                        # ENVIAR COMANDO "LON" AL ESCÁNER
+                        if Escaner and Escaner.is_open:
+                            try:
+                                Escaner.write(b'LON\r')
+                                escribir_en_consola("APP→ESCANER", "Comando enviado: LON")
+                                escribir_en_consola_USER("Abril-SIM", "Activando escáner para lectura QR...")
+                            except Exception as e:
+                                escribir_en_consola("ERROR", f"Error al enviar LON al escáner: {e}")
+                                Controller_Error.Logs_Error.CapturarEvento("plc_a_pc", "enviar_LON", str(e))
+                        else:
+                            escribir_en_consola("ERROR", "Escáner no disponible para enviar comando LON")
                     
                     # Señal 2: OUT03 : ON
                     if "OUT03 : ON" in texto or "OUT03:ON" in texto.replace(" ", "") or "out03:on" in texto.lower():
@@ -137,7 +181,7 @@ def plc_a_pc(PLC_salida, Ventrada, term = b'\r'):
                         if in00_recibido and out03_recibido and not sn_validado:
                             esperar_validacion_sn = True
                             escribir_en_consola("APP", " AMBAS SEÑALES RECIBIDAS - SOLICITAR SN")
-                            escribir_en_consola_USER("Abril-SIM", "ESCANEAR SN PARA CONTINUAR")
+                            escribir_en_consola_USER("Abril-SIM", "Esperando lectura del escáner...")
                     
                     # Enviar mensaje a la PC (SIEMPRE, sin bloqueos)
                     try:
@@ -163,6 +207,7 @@ out03_recibido = False          # NUEVO: Flag para OUT03 : ON
 cola_pendientes = queue.Queue()
 sn_actual = None
 lineas_log = []
+Escaner = None  # Puerto serial del escáner
 
 if Activador_MES == False:
     puertos_com = crear_monitores(configuracion)
@@ -194,6 +239,20 @@ else:
         PLC_salida = serial.Serial(com_out, com_baudrate, timeout=None)
         escribir_en_consola("APP", f"✓ Puerto de salida abierto: {com_out}")
         
+        # Intentar abrir puerto del escáner
+        if puerto_escaner and baudrate_escaner:
+            try:
+                escribir_en_consola("APP", f"Intentando abrir puerto del escáner: {puerto_escaner} @ {baudrate_escaner}")
+                Escaner = serial.Serial(puerto_escaner, baudrate_escaner, timeout=1)
+                escribir_en_consola("APP", f"✓ Puerto del escáner abierto: {puerto_escaner}")
+            except Exception as e:
+                escribir_en_consola("ERROR", f"No se pudo abrir el escáner: {e}")
+                escribir_en_consola("APP", "El sistema continuará sin escáner (solo entrada manual)")
+                Escaner = None
+        else:
+            escribir_en_consola("APP", "Configuración del escáner no encontrada. Usando solo entrada manual.")
+            Escaner = None
+        
         activador = True
         puertos_creados_exitosamente = True
         escribir_en_consola("APP", "✓ Puertos seriales creados exitosamente")
@@ -224,11 +283,12 @@ else:
     sn_queue = queue.Queue()
     lock_sn = threading.RLock()  # RLock permite reentrada desde el mismo hilo
     secuencia_activa = threading.Event()
+    mensajes_en_cola = set()  # NUEVO: Tracking de mensajes únicos en cola para evitar duplicados
 
     def reiniciar_ciclo():
         """Reinicia el ciclo completo para permitir un nuevo SN y reinicia la secuencia del PLC"""
         global iniciar_secuencia, resultado_secuencia, permitir_paso_mensajes, sn_actual, lineas_log
-        global esperar_validacion_sn, sn_validado, in00_recibido, out03_recibido
+        global esperar_validacion_sn, sn_validado, in00_recibido, out03_recibido, mensajes_en_cola
         
         with lock_sn:
             sn_previo = sn_actual
@@ -242,6 +302,7 @@ else:
             sn_actual = None
             lineas_log = []
             secuencia_activa.clear()
+            mensajes_en_cola.clear()        # NUEVO: Limpiar tracking de mensajes
             # Limpiar cola pendientes
             while not cola_pendientes.empty():
                 try:
@@ -272,14 +333,114 @@ else:
         escribir_en_consola("Abril-SIM", f"Ciclo reiniciado (SN previo: {sn_previo}). Listo para nuevo SN.")
         escribir_en_consola_USER("Abril-SIM", "Sistema listo para siguiente SN.")
 
-    def pedir_sn_async():
-        """Hilo para pedir SN de forma asíncrona"""
+    def leer_escaner_async():
+        """Hilo para leer datos del escáner por puerto serial"""
+        global Escaner, activador
+        
+        escribir_en_consola("APP", "Hilo leer_escaner_async iniciado")
+        buf_escaner = bytearray()
+        
         while activador:
             try:
-                sys.stdout.flush()
-                sn_in = input("Pickeo de SN: ").strip()
-                if sn_in:
-                    sn_queue.put(sn_in)
+                if not Escaner or not Escaner.is_open:
+                    time.sleep(0.1)
+                    continue
+                
+                # Leer datos del escáner
+                n = Escaner.in_waiting
+                if n > 0:
+                    chunk = Escaner.read(n)
+                    buf_escaner.extend(chunk)
+                    
+                    # Buscar terminador (puede ser \r o \n dependiendo del escáner)
+                    while True:
+                        pos_r = buf_escaner.find(b'\r')
+                        pos_n = buf_escaner.find(b'\n')
+                        
+                        # Encontrar el primer terminador
+                        if pos_r == -1 and pos_n == -1:
+                            break
+                        
+                        pos = pos_r if pos_r != -1 and (pos_n == -1 or pos_r < pos_n) else pos_n
+                        term_len = 1
+                        
+                        # Extraer el código
+                        codigo = bytes(buf_escaner[:pos]).decode('utf-8', errors='ignore').strip()
+                        del buf_escaner[:pos + term_len]
+                        
+                        # Si hay código válido, enviarlo a la cola
+                        if codigo and len(codigo) > 0:
+                            escribir_en_consola("ESCANER→APP", f"Código leído: {codigo}")
+                            sn_queue.put(codigo)
+                
+                time.sleep(0.01)
+                
+            except Exception as e:
+                escribir_en_consola("ERROR", f"Error en leer_escaner: {e}")
+                Controller_Error.Logs_Error.CapturarEvento("leer_escaner_async", "loop", str(e))
+                time.sleep(0.1)
+    
+    def pedir_sn_async():
+        """Hilo para pedir SN de forma asíncrona (entrada manual de respaldo)"""
+        import sys
+        import msvcrt  # Para leer caracteres sin Enter en Windows
+        
+        while activador:
+            try:
+                sn_buffer = ""
+                prompt_mostrado = False
+                ultimo_char_time = time.time()
+                
+                while activador:
+                    # Mostrar prompt solo cuando se detecta espera de SN
+                    if esperar_validacion_sn and not prompt_mostrado:
+                        print("\n[Manual] Pickeo de SN: ", end='', flush=True)
+                        prompt_mostrado = True
+                    
+                    # Leer un caracter a la vez (sin esperar Enter)
+                    if msvcrt.kbhit():
+                        char = msvcrt.getch()
+                        
+                        # Mostrar prompt si se empieza a escribir y no estaba mostrado
+                        if not prompt_mostrado and len(sn_buffer) == 0:
+                            print("\n[Manual] Pickeo de SN: ", end='', flush=True)
+                            prompt_mostrado = True
+                        
+                        # Enter manual (si el usuario lo presiona)
+                        if char in (b'\r', b'\n'):
+                            if sn_buffer.strip():
+                                print()  # Nueva línea
+                                sn_queue.put(sn_buffer.strip())
+                                prompt_mostrado = False
+                            break
+                        
+                        # Backspace
+                        elif char == b'\x08':
+                            if len(sn_buffer) > 0:
+                                sn_buffer = sn_buffer[:-1]
+                                # Borrar el último caracter en pantalla
+                                print('\b \b', end='', flush=True)
+                        
+                        # Caracter normal
+                        else:
+                            try:
+                                decoded_char = char.decode('utf-8')
+                                sn_buffer += decoded_char
+                                print(decoded_char, end='', flush=True)
+                                ultimo_char_time = time.time()
+                            except:
+                                pass
+                    
+                    # AUTO-ENTER: Si han pasado más de 100ms sin nuevos caracteres y hay buffer
+                    # Esto detecta cuando el escáner terminó de enviar el SN
+                    if len(sn_buffer) > 0 and (time.time() - ultimo_char_time) > 0.1:
+                        print()  # Nueva línea
+                        sn_queue.put(sn_buffer.strip())
+                        prompt_mostrado = False
+                        break
+                    
+                    time.sleep(0.01)  # Pequeña pausa para no saturar CPU
+                    
             except (EOFError, KeyboardInterrupt):
                 break
             except Exception as e:
@@ -315,6 +476,21 @@ else:
                     if sn_actual is not None and sn_validado:
                         escribir_en_consola_USER("Abril-SIM", f"SN [{sn_actual}] en proceso. Esperá a que termine el ciclo.")
                         escribir_en_consola("APP", f"SN rechazado: {sn_texto} (hay secuencia activa)")
+                        
+                        # Mostrar popup al usuario
+                        mostrar_popup_timeout(
+                            f"SN rechazado: {sn_texto}\n\nHay una secuencia activa con SN [{sn_actual}]\n\nEsperá a que termine el ciclo actual.",
+                            titulo="Secuencia en Progreso"
+                        )
+                        
+                        # LIMPIAR LA COLA DE SNs PARA EVITAR ACUMULACIÓN
+                        sn_descartados = 0
+                        while not sn_queue.empty():
+                            try:
+                                sn_queue.get_nowait()
+                                sn_descartados += 1
+                            except queue.Empty:
+                                break
                         continue
                 
                 # Procesar el nuevo SN
@@ -331,6 +507,14 @@ else:
                     breq_resp = str(e)
                     escribir_en_consola_USER("Abril-SIM", f"Error al validar SN: {e}")
                     mostrar_popup_fail(f"Error al validar SN [{sn_texto}] \n{breq_resp}", titulo="Error BREQ")
+                    
+                    # CERRAR VENTANAS DE ERROR AUTOMÁTICAMENTE
+                    escribir_en_consola("APP", "Intentando cerrar ventanas de error...")
+                    time.sleep(0.5)  # Esperar a que aparezca la ventana
+                    auto_closer.cerrar_ventana_ahora("ERROR")
+                    auto_closer.cerrar_ventana_ahora("Error")
+                    auto_closer.cerrar_ventana_ahora("TIMEOUT")
+                    
                     # Resetear flags para permitir nuevo intento
                     with lock_sn:
                         esperar_validacion_sn = False
@@ -359,21 +543,45 @@ else:
                         
                         # Enviar mensajes pendientes (si hay)
                         mensajes_enviados = 0
+                        mensajes_unicos_enviados = set()
                         while not cola_pendientes.empty():
                             try:
                                 frame_p = cola_pendientes.get_nowait()
-                                PLC_salida.write(frame_p)
-                                mensajes_enviados += 1
+                                texto_p = frame_p.decode('utf-8', errors='ignore').strip()
+                                
+                                # Solo enviar si no se ha enviado antes (evitar duplicados)
+                                if texto_p not in mensajes_unicos_enviados:
+                                    PLC_salida.write(frame_p)
+                                    mensajes_unicos_enviados.add(texto_p)
+                                    mensajes_enviados += 1
+                                    escribir_en_consola("APP", f"  → Enviando mensaje pendiente: {texto_p}")
                             except Exception as e:
                                 Controller_Error.Logs_Error.CapturarEvento("procesar_sn", "enviar_pendientes", str(e))
                         
+                        # Limpiar tracking después de enviar
+                        with lock_sn:
+                            mensajes_en_cola.clear()
+                        
                         if mensajes_enviados > 0:
-                            escribir_en_consola("APP", f"Enviados {mensajes_enviados} mensajes pendientes")
+                            escribir_en_consola("APP", f"✓ Enviados {mensajes_enviados} mensajes únicos pendientes")
                     else:
                         escribir_en_consola("APP", f"✗ SN rechazado: {sn_texto} - {breq_msg}")
                         escribir_en_consola("APP", f"   Respuesta completa BREQ: {breq_resp}")
                         escribir_en_consola_USER("Abril-SIM", f"✗ SN [{sn_texto}] rechazado por SIM.")
-                        mostrar_popup_fail(f"SN [{sn_texto}] rechazado:\n{breq_msg}\n\nEl ciclo se reiniciará completamente.", titulo="SN Inválido - Reiniciando")
+                        mostrar_popup_fail(f"Porfavor Retire la Placa \n\n {sn_texto} rechazado:\n{breq_msg}\n", titulo="SN Inválido")
+                        
+                        # CERRAR VENTANAS DE ERROR/TIMEOUT AUTOMÁTICAMENTE
+                        escribir_en_consola("APP", "Cerrando ventanas de error automáticamente...")
+                        time.sleep(1.0)  # Esperar a que aparezcan las ventanas
+                        
+                        # Intentar cerrar múltiples tipos de ventanas de error
+                        ventanas_cerradas = 0
+                        for titulo in ["ERROR", "Error", "TIMEOUT", "Timeout", "Warning", "Advertencia"]:
+                            if auto_closer.cerrar_ventana_ahora(titulo):
+                                ventanas_cerradas += 1
+                        
+                        if ventanas_cerradas > 0:
+                            escribir_en_consola("APP", f"✓ {ventanas_cerradas} ventana(s) de error cerrada(s) automáticamente")
                         
                         # GUARDAR LOG DE BREQ RECHAZADO
                         try:
@@ -390,12 +598,14 @@ else:
                         
                         # LIMPIAR COLA DE MENSAJES PENDIENTES
                         mensajes_descartados = 0
-                        while not cola_pendientes.empty():
-                            try:
-                                cola_pendientes.get_nowait()
-                                mensajes_descartados += 1
-                            except:
-                                break
+                        with lock_sn:
+                            while not cola_pendientes.empty():
+                                try:
+                                    cola_pendientes.get_nowait()
+                                    mensajes_descartados += 1
+                                except:
+                                    break
+                            mensajes_en_cola.clear()  # Limpiar tracking de mensajes
                         
                         if mensajes_descartados > 0:
                             escribir_en_consola("APP", f"✓ Cola limpiada: {mensajes_descartados} mensajes descartados")
@@ -406,7 +616,7 @@ else:
                         escribir_en_consola("APP", "═══════════════════════════════════════════")
                         escribir_en_consola("APP", "║  SN RECHAZADO - REINICIANDO CICLO      ║")
                         escribir_en_consola("APP", "═══════════════════════════════════════════")
-                        escribir_en_consola_USER("Abril-SIM", "Ciclo reiniciado. Sistema listo para nueva prueba.")
+                        escribir_en_consola_USER("Abril-SIM", "Ingrese una Nueva Placa. Listo Para un nuevo Intento")
                         
                         # Llamar a reiniciar_ciclo para resetear todo
                         reiniciar_ciclo()
@@ -416,8 +626,8 @@ else:
                 time.sleep(0.1)
 
     def hilo_mensajes_entrada():
-        """Hilo para procesar mensajes de entrada PC→PLC - BLOQUEA SI ESPERA VALIDACIÓN SN"""
-        global iniciar_secuencia, resultado_secuencia, sn_actual, sn_validado, esperar_validacion_sn
+        """Hilo para procesar mensajes de entrada PC→PLC - BLOQUEA SI ESPERA VALIDACIÓN SN (excepto mensajes críticos)"""
+        global iniciar_secuencia, resultado_secuencia, sn_actual, sn_validado, esperar_validacion_sn, mensajes_en_cola
         
         while activador:
             try:
@@ -445,15 +655,22 @@ else:
                     if not texto:
                         continue
                     
+                    # VERIFICAR SI ES UN MENSAJE CRÍTICO (valores_definidos_taxis)
+                    es_mensaje_critico = texto in dejarPasar
+                    
                     # VERIFICAR SI SE DEBE BLOQUEAR EL FLUJO
                     with lock_sn:
                         esperando_sn = esperar_validacion_sn
                         sn_ok = sn_validado
                     
-                    # SI ESTÁ ESPERANDO VALIDACIÓN Y NO HAY SN VALIDADO: BLOQUEAR
-                    if esperando_sn and not sn_ok:
-                        escribir_en_consola("APP", f"⏸ Mensaje bloqueado (esperando SN): {texto}")
-                        cola_pendientes.put(frame)
+                    # SI ESTÁ ESPERANDO VALIDACIÓN Y NO HAY SN VALIDADO: BLOQUEAR (excepto mensajes críticos)
+                    if esperando_sn and not sn_ok and not es_mensaje_critico:
+                        # DEDUPLICACIÓN: Solo agregar a la cola si NO está ya presente
+                        with lock_sn:
+                            if texto not in mensajes_en_cola:
+                                cola_pendientes.put(frame)
+                                mensajes_en_cola.add(texto)
+                                escribir_en_consola("APP", f"⏸ Mensaje bloqueado (esperando SN): {texto}")
                         continue
                     
                     # ENVIAR MENSAJE AL PLC
@@ -590,9 +807,21 @@ else:
     # Iniciar hilos
     escribir_en_consola("APP", "Iniciando hilos del sistema...")
     
+    # Configurar y iniciar auto-closer de ventanas
+    auto_closer.set_log_callback(escribir_en_consola)
+    auto_closer.iniciar()
+    escribir_en_consola("APP", "✓ Auto-closer de ventanas ERROR iniciado")
+    
+    # Hilo para leer del escáner (si está disponible)
+    if Escaner:
+        hilo_escaner = threading.Thread(target=leer_escaner_async, daemon=True, name="LeerEscaner")
+        hilo_escaner.start()
+        escribir_en_consola("APP", "✓ Hilo de lectura del escáner iniciado")
+    
+    # Hilo de entrada manual (respaldo)
     hilo_input_sn = threading.Thread(target=pedir_sn_async, daemon=True, name="InputSN")
     hilo_input_sn.start()
-    escribir_en_consola("APP", "✓ Hilo de entrada SN iniciado")
+    escribir_en_consola("APP", "✓ Hilo de entrada manual SN iniciado")
     
     hilo_procesador_sn = threading.Thread(target=procesar_sn_async, daemon=True, name="ProcesarSN")
     hilo_procesador_sn.start()
@@ -615,12 +844,19 @@ else:
         escribir_en_consola("APP", "Interrupción manual detectada. Cerrando...")
         activador = False
         try:
+            # Detener auto-closer
+            auto_closer.detener()
+            escribir_en_consola("APP", "Auto-closer detenido")
+            
             if Ventrada and Ventrada.is_open:
                 Ventrada.close()
                 escribir_en_consola("APP", "Puerto de entrada cerrado")
             if PLC_salida and PLC_salida.is_open:
                 PLC_salida.close()
                 escribir_en_consola("APP", "Puerto de salida cerrado")
+            if Escaner and Escaner.is_open:
+                Escaner.close()
+                escribir_en_consola("APP", "Puerto del escáner cerrado")
         except Exception as e:
             escribir_en_consola("ERROR", f"Error al cerrar puertos: {e}")
         escribir_en_consola("APP", "Aplicación terminada.")
@@ -629,9 +865,16 @@ else:
         escribir_en_consola("ERROR", f"Error crítico en bucle principal: {e}")
         activador = False
         try:
+            # Detener auto-closer
+            auto_closer.detener()
+            
             if Ventrada and Ventrada.is_open:
                 Ventrada.close()
             if PLC_salida and PLC_salida.is_open:
                 PLC_salida.close()
+            if Escaner and Escaner.is_open:
+                Escaner.close()
         except:
             pass
+
+        

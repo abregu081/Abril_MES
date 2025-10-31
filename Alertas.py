@@ -168,8 +168,8 @@ class PopUpAvisos:
         self, 
         mensaje: str, 
         titulo: Optional[str] = None,
-        ancho: int = 400,
-        alto: int = 200,
+        ancho: int = 500,
+        alto: int = 300,
         duracion: int = 3000
     ) -> None:
         """
